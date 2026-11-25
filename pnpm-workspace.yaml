@@ -1,0 +1,7 @@
+allowBuilds:
+  playwright-chromium: true
+
+# Make Node resolve "localhost" to 127.0.0.1 before ::1 in pnpm scripts, so
+# Slidev binds IPv4. The Throne VPN (sing-box TUN, strict route, IPv6 off)
+# blocks all IPv6 traffic, including ::1 loopback.
+nodeOptions: --dns-result-order=ipv4first

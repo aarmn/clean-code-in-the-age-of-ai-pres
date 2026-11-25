@@ -1,0 +1,125 @@
+--- a/booking/domain.py
++++ b/booking/domain.py
+@@ -1,4 +1,4 @@
+-from dataclasses import dataclass
++from dataclasses import dataclass, replace
+ from typing import Protocol
+ 
+ 
+@@ -6,6 +6,7 @@
+ class Booking:
+     booking_id: str
+     seats: int
++    cancelled: bool = False
+ 
+ 
+ class BookingStore(Protocol):
+@@ -17,6 +18,10 @@
+     pass
+ 
+ 
++class BookingNotFound(Exception):
++    pass
++
++
+ def quote_cents(seats: int, unit_price_cents: int) -> int:
+     if seats < 1:
+         raise ValueError("Book at least one seat")
+@@ -34,3 +39,11 @@
+         booking = Booking(booking_id, seats)
+         self.store.save(booking)
+         return booking
++
++    def cancel(self, booking_id: str) -> None:
++        booking = self.store.get(booking_id)
++        if booking is None:
++            raise BookingNotFound(booking_id)
++        if booking.cancelled:
++            return
++        self.store.save(replace(booking, cancelled=True))
+--- a/booking/api.py
++++ b/booking/api.py
+@@ -1,9 +1,14 @@
+ import logging
+ 
+-from fastapi import FastAPI, HTTPException
++from fastapi import FastAPI, HTTPException, Response
+ from pydantic import BaseModel, Field
+ 
+-from booking.domain import BookingAlreadyExists, BookingService, BookingStore
++from booking.domain import (
++    BookingAlreadyExists,
++    BookingNotFound,
++    BookingService,
++    BookingStore,
++)
+ from booking.storage import MemoryBookingStore
+ 
+ logger = logging.getLogger(__name__)
+@@ -37,6 +42,20 @@
+         logger.info("booking_created", extra={"seats": booking.seats})
+         return BookingResponse(booking_id=booking.booking_id, seats=booking.seats)
+ 
++    @app.delete(
++        "/bookings/{booking_id}",
++        status_code=204,
++        response_class=Response,
++        responses={404: {"description": "Booking ID does not exist"}},
++    )
++    def cancel_booking(booking_id: str) -> Response:
++        try:
++            service.cancel(booking_id)
++        except BookingNotFound as exc:
++            raise HTTPException(404, "Booking ID does not exist") from exc
++
++        return Response(status_code=204)
++
+     return app
+ 
+ 
+--- a/tests/test_booking.py
++++ b/tests/test_booking.py
+@@ -2,7 +2,8 @@
+ from fastapi.testclient import TestClient
+ 
+ from booking.api import create_app
+-from booking.domain import quote_cents
++from booking.domain import Booking, quote_cents
++from booking.storage import MemoryBookingStore
+ 
+ 
+ def test_quote_uses_integer_cents() -> None:
+@@ -39,3 +40,33 @@
+         schema = client.get("/openapi.json").json()
+         responses = schema["paths"]["/bookings"]["post"]["responses"]
+         assert {"201", "409", "422"} <= responses.keys()
++
++
++def test_cancelling_twice_returns_empty_responses() -> None:
++    store = MemoryBookingStore()
++    with TestClient(create_app(store)) as client:
++        payload = {"booking_id": "A42", "seats": 2}
++        assert client.post("/bookings", json=payload).status_code == 201
++
++        first = client.delete("/bookings/A42")
++        repeated = client.delete("/bookings/A42")
++
++        assert first.status_code == repeated.status_code == 204
++        assert first.content == repeated.content == b""
++        assert store.get("A42") == Booking("A42", 2, cancelled=True)
++        assert client.post("/bookings", json=payload).status_code == 409
++
++
++def test_unknown_booking_returns_not_found() -> None:
++    with TestClient(create_app()) as client:
++        response = client.delete("/bookings/unknown")
++        assert response.status_code == 404
++        assert response.json() == {"detail": "Booking ID does not exist"}
++
++
++def test_openapi_documents_cancel_without_a_success_body() -> None:
++    with TestClient(create_app()) as client:
++        schema = client.get("/openapi.json").json()
++        responses = schema["paths"]["/bookings/{booking_id}"]["delete"]["responses"]
++        assert {"204", "404"} <= responses.keys()
++        assert "content" not in responses["204"]

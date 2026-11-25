@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: Toy ID Report
+  version: 1.0.0
+paths:
+  /id-reports:
+    post:
+      summary: Compute an ID report without modifying inputs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [expected_ids, observed_ids]
+              properties:
+                expected_ids:
+                  $ref: "#/components/schemas/IdList"
+                observed_ids:
+                  $ref: "#/components/schemas/IdList"
+            example:
+              expected_ids: [January, February]
+              observed_ids: [January, March, January]
+      responses:
+        "200":
+          description: ID report
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [missing, unexpected, duplicates]
+                properties:
+                  missing:
+                    $ref: "#/components/schemas/IdList"
+                  unexpected:
+                    $ref: "#/components/schemas/IdList"
+                  duplicates:
+                    $ref: "#/components/schemas/IdList"
+              example:
+                missing: [February]
+                unexpected: [March]
+                duplicates: [January]
+        "422":
+          description: Malformed IDs or invalid payload
+components:
+  schemas:
+    IdList:
+      type: array
+      items:
+        type: string
+        pattern: '^[a-zA-Z0-9_-]{1,32}$'

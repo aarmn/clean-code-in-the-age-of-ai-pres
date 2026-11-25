@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+build.log
+
+# Vercel CLI project link
+.vercel/
+
+# Local archive of an earlier version of the deck
+previous builds/
+
+# Outdated PDF of the old deck's notes; SPEAKER-NOTES.md is current
+SPEAKER-NOTES.pdf
