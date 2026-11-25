@@ -25,8 +25,11 @@ function lastBefore(slides: Route[], no: number, key: string): string | undefine
 }
 function label(slides: Route[], no: number): string {
   const part = lastBefore(slides, no, 'part')
-  const chapter = lastBefore(slides, no, 'chapter')
   const partLabel = part ? PARTS[part] ?? part : 'CLEAN CODE IN THE AI AGE'
+  // A part's own title page shows just the part.
+  if (fm(slides[no - 1]).part)
+    return partLabel
+  const chapter = lastBefore(slides, no, 'chapter')
   return chapter && part ? `${partLabel}  ·  ${chapter.toUpperCase()}` : partLabel
 }
 function shown(slides: Route[], no: number): boolean {
@@ -44,7 +47,7 @@ function isAi(slides: Route[], no: number): boolean {
       <span class="deck-foot-label">{{ label($nav.slides, $nav.currentSlideNo) }}</span>
       <span class="bar" />
       <span class="page">{{ String($nav.currentSlideNo).padStart(2, '0') }}</span>
-      <DotSphere class="deck-foot-sphere" :size="58" :dots="260" :dot-radius="1.05" :period="18" />
+      <DotSphere class="deck-foot-sphere" :size="76" :detail="2" :dot-radius="0.55" :noise="0.06" :period="20" />
     </div>
   </div>
 </template>

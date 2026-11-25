@@ -4,10 +4,10 @@ A 90-minute Slidev workshop for developers who already know Python, presented by
 
 **Live slides:** https://clean-code-in-the-age-of-ai-pres.vercel.app
 
-1. **Clean Code: Classic** (60 min). Concepts that work in any language first: readability, KISS/DRY/YAGNI, SOLID, design patterns (Factory, Strategy, Adapter, Singleton), and structure (MVC, MVVM, GRASP). Then Python: PEPs, dataclasses and enums, the standard library, and tooling (Ruff, mypy, uv, pytest). Then beyond the code: OpenAPI and observability.
-2. **Clean Code: Age of AI** (30 min). Project guides (AGENTS.md), skills, MCP, tool design and permissions, choosing a model, and reviewing what an agent wrote.
+1. **Clean Code: Classic** (60 min). Concepts that work in any language first: readability; principles (KISS, DRY, YAGNI and each SOLID letter, one code example per page); code smells; design patterns (Factory, Strategy, Adapter, Singleton); and structure (MVC, MVVM, GRASP). Then Python: PEPs, dataclasses and enums, built-ins and the standard library, and tooling (Ruff, mypy, uv, pytest). Then beyond the code: OpenAPI and observability.
+2. **Clean Code: Age of AI** (30 min). Instructions (task briefs, AGENTS.md, skills, MCP), tools and permissions, choosing a model, and reviewing what an agent wrote.
 
-One running project, a seat-booking API, carries every example. Each topic fixes a real problem in it and ends with one piece of advice.
+One running project, a seat-booking API, carries every example. Each chapter opens with a title page; each topic fixes a real problem in the project and ends with one piece of advice.
 
 ## Run it
 

@@ -145,14 +145,17 @@
 .rows.wide > div { grid-template-columns: 150px 1fr; }
 .rows.wide > div > b { font: 12px/1.6 var(--mono); letter-spacing: .08em; }
 
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.chips span {
-  padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 8px;
-  background: rgba(var(--accent-rgb), 0.08); color: var(--paper); font: 12.5px var(--mono);
-}
-.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 6px 0 16px; }
-.flow span { padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 8px; background: rgba(var(--accent-rgb), 0.09); color: var(--paper); font: 13px var(--mono); }
-.flow b { color: var(--accent); }
+.code-notes.wide { grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr); }
+
+/* Before/after comparison: two code columns, then a few "why" bullets. */
+.compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.compare .slidev-code { font-size: 12px !important; line-height: 1.42 !important; }
+.compare > div:first-child pre { border-color: rgba(251, 113, 133, 0.45); }
+.compare > div:last-child pre { border-color: rgba(134, 239, 172, 0.45); }
+.label.bad { color: var(--bad); }
+.label.good { color: var(--good); }
+.why { margin-top: 16px !important; }
+.why li { font-size: 15.5px; }
 
 .slidev-layout table { width: 100%; margin: 6px 0 14px; border-collapse: collapse; font-size: 16px; }
 .slidev-layout th { color: var(--accent); font: 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; text-align: left; }
@@ -160,9 +163,10 @@
 .slidev-layout tbody tr:hover td { background: rgba(var(--accent-rgb), 0.05); }
 
 /* ── Cover, section dividers, finish ───────────────────────────────── */
-.cover-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; }
-.cover-grid .dot-sphere { margin-right: -24px; }
-.cover-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.cover.slidev-layout { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+.cover-text { position: relative; z-index: 1; max-width: 500px; }
+.cover-sphere { position: absolute !important; right: -70px; top: 50%; transform: translateY(-50%); }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
 .cover-meta span {
   padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 999px;
   background: rgba(var(--accent-rgb), 0.08); color: var(--accent);
@@ -177,10 +181,27 @@
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .deck-subtitle { font-size: 20px; line-height: 1.45; color: var(--soft); max-width: 600px; }
-.cover-credit { display: flex; align-items: center; gap: 14px; margin-top: 34px; }
-.cover-credit img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; border: 2px solid var(--accent); }
+.cover .deck-subtitle { font-size: 18px; }
+.cover-credit { margin-top: 28px; padding-left: 14px; border-left: 2px solid var(--accent); }
 .cover-credit strong { display: block; font-size: 17px; }
 .cover-credit span { font-size: 14px; color: var(--muted); }
+
+/* ── Chapter title pages ────────────────────────────────────────────── */
+.chapter.slidev-layout {
+  background:
+    radial-gradient(ellipse 55% 70% at 8% 50%, rgba(var(--accent-rgb), 0.2), transparent 70%),
+    radial-gradient(circle, rgba(196, 167, 255, 0.07) 1px, transparent 1.3px) 0 0 / 24px 24px,
+    var(--bg);
+}
+.chapter-head { display: flex; align-items: baseline; gap: 24px; }
+.chapter-num {
+  font: 700 110px/0.9 var(--serif); letter-spacing: -.05em;
+  background: linear-gradient(160deg, var(--accent) 10%, var(--accent-2) 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.chapter h1 { font-size: 58px; font-weight: 680; line-height: 1.02; letter-spacing: -.025em; margin: 0; }
+.chapter .lead { margin: 18px 0 14px; max-width: 760px; font-size: 21px; }
+.chapter .check-list li { font-size: 17px; }
 .section.slidev-layout, .finish.slidev-layout {
   background:
     radial-gradient(ellipse 60% 75% at 92% 60%, rgba(var(--accent-rgb), 0.26), transparent 70%),
@@ -273,7 +294,7 @@
   mask-image: linear-gradient(to top, #000 50%, transparent);
 }
 .deck-foot {
-  position: absolute; left: 58px; right: 20px; bottom: 6px; height: 58px;
+  position: absolute; left: 58px; right: 12px; bottom: 0; height: 76px;
   display: flex; align-items: center; gap: 16px;
   font: 10.5px var(--mono); letter-spacing: .14em; color: var(--muted); white-space: pre;
 }
