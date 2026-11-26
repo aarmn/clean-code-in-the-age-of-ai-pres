@@ -1626,7 +1626,7 @@ service = BookingService(
 </div>
 
 <!--
-1 min · 29.5–30.5 elapsed
+0.5 min · 29.5–30 elapsed
 
 This is a factory function, not a reason to build factory classes. The settings value comes from the environment, so it still needs runtime validation: that’s the ValueError.
 -->
@@ -1672,7 +1672,7 @@ service = BookingService(store, pricing=EarlyBirdPricing())
 </div>
 
 <!--
-1 min · 30.5–31.5 elapsed
+1 min · 30–31 elapsed
 
 In Python a strategy can simply be a function, `Callable[[int], int]`; a class earns its place when the rule has settings, like the percentage here.
 -->
@@ -1717,7 +1717,7 @@ class StripePayments:
 </div>
 
 <!--
-1 min · 31.5–32.5 elapsed
+0.5 min · 31–31.5 elapsed
 
 An adapter translates at a boundary you don’t control. A `FakePayments` in tests appends to a list, so no network call and no test card is needed.
 -->
@@ -1759,7 +1759,7 @@ assert Settings() is Settings()        # the same object
 </div>
 
 <!--
-0.5 min · 32.5–33 elapsed
+0.5 min · 31.5–32 elapsed
 
 This is the Gang of Four singleton, enforced by the class itself. The metaclass version overrides `type.__call__` and keeps a dict of instances, so `__init__` runs once too. Then show the next slide: the Pythonic version doesn’t enforce anything, and that’s usually better.
 -->
@@ -1806,7 +1806,7 @@ def create_booking(
 </div>
 
 <!--
-1 min · 33–34 elapsed
+1 min · 32–33 elapsed
 
 Strictly, this isn’t a singleton: `Settings()` still makes a second object. It’s one instance by convention, because everyone goes through `get_settings()`. Python modules are singletons too, which is why a module-level object is the other common answer. Keep singletons for read-only things like settings or a client.
 -->
@@ -1849,7 +1849,7 @@ def create_booking(
 </div>
 
 <!--
-1 min · 34–35 elapsed
+1 min · 33–34 elapsed
 
 **Answer to “is dependency inversion just dependency injection?”** No, but they travel together. DIP is a design property; DI is the most common way to get it in Python.
 -->
@@ -1903,7 +1903,7 @@ service = BookingService()   # no store in sight
 </ul>
 
 <!--
-0.5 min · 35–35.5 elapsed
+0.5 min · 34–34.5 elapsed
 
 **Ask:** “Who chooses the concrete store, and who asks for it?” In both versions, application setup chooses the implementation (Postgres). The difference is whether setup hands the store to the service, or the service pulls it from a registry at runtime.
 
@@ -1925,7 +1925,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 35.5–36 elapsed
+0.5 min · 34.5–35 elapsed
 -->
 
 ---
@@ -1951,7 +1951,7 @@ chapter: Structure
 </ul>
 
 <!--
-0.5 min · 36–36.5 elapsed
+0.5 min · 35–35.5 elapsed
 
 “Model” in this chapter means your domain model, not a machine-learning model.
 -->
@@ -1996,7 +1996,7 @@ def create_booking(req: BookingRequest) -> BookingResponse:
 </div>
 
 <!--
-1 min · 36.5–37.5 elapsed
+1 min · 35.5–36.5 elapsed
 
 Our API already is MVC; we just hadn’t named it.
 -->
@@ -2016,7 +2016,7 @@ Our API already is MVC; we just hadn’t named it.
 <div class="statement">Each layer only calls the one below it. Also known as three-tier, or n-tier, architecture.</div>
 
 <!--
-0.5 min · 37.5–38 elapsed
+0.5 min · 36.5–37 elapsed
 
 Strictly, “layers” are a logical split and “tiers” are where code runs (browser, server, database), but people use the words interchangeably. Our booking API already has all three: we built them during the refactor.
 -->
@@ -2036,7 +2036,7 @@ Strictly, “layers” are a logical split and “tiers” are where code runs (
 <div class="statement">A rule in the client is a suggestion. A rule on the server is a rule.</div>
 
 <!--
-0.5 min · 38–38.5 elapsed
+0.5 min · 37–37.5 elapsed
 
 The presentation layer can run in a browser or a phone, but the business logic layer stays on the server. The price shown in the app is a preview; the server computes the one that gets charged.
 -->
@@ -2081,9 +2081,39 @@ class BookingService:              # Controller: handles the
 </div>
 
 <!--
-1 min · 38.5–39.5 elapsed
+1 min · 37.5–38.5 elapsed
 
 GRASP isn’t an architecture like MVC; it’s a checklist for assigning responsibilities.
+-->
+
+---
+clicks: 1
+---
+
+<div class="kicker">STRUCTURE · GRASP · ALL NINE</div>
+
+# All nine GRASP patterns, on the booking API
+
+<ScrollStage :shift="98" :height="332">
+
+<div class="rows wide xl">
+<div><b>Information Expert</b><span>The object with the data does the job: <code>Pricing</code> computes totals.</span></div>
+<div><b>Creator</b><span>Whoever has what a new object needs creates it: the service makes bookings.</span></div>
+<div><b>Controller</b><span>One object receives each system event: the route hands “create” to the service.</span></div>
+<div><b>Low Coupling</b><span>Depend on few, stable things: the service sees a protocol, not Postgres.</span></div>
+<div><b>High Cohesion</b><span>Keep each class focused: all the pricing code lives in one place.</span></div>
+<div><b>Polymorphism</b><span>Handle variation with types, not if-chains: many pricing classes, one call.</span></div>
+<div><b>Pure Fabrication</b><span>Invent a helper the domain doesn’t have, to keep things clean: <code>BookingStore</code>.</span></div>
+<div><b>Indirection</b><span>Put a go-between to decouple two parts: <code>PaymentGateway</code> between service and Stripe.</span></div>
+<div><b>Protected Variations</b><span>Wrap what will change behind a stable interface: storage and payments.</span></div>
+</div>
+
+</ScrollStage>
+
+<!--
+0.5 min · 38.5–39 elapsed
+
+**Click** to slide down to the last ones. Several of these are old friends under new names: Polymorphism is Strategy, Indirection is Adapter, Protected Variations is the open/closed principle.
 -->
 
 ---
@@ -2101,7 +2131,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 39.5–40 elapsed
+0.5 min · 39–39.5 elapsed
 
 That closes the language-independent concepts. From here on it’s Python.
 -->
@@ -2128,7 +2158,7 @@ chapter: Python
 </ul>
 
 <!--
-0.5 min · 40–40.5 elapsed
+0.5 min · 39.5–40 elapsed
 -->
 
 ---
@@ -2145,7 +2175,7 @@ chapter: Python
 </div>
 
 <!--
-0.5 min · 40.5–41 elapsed
+0.5 min · 40–40.5 elapsed
 -->
 
 ---
@@ -2214,28 +2244,22 @@ clicks: 1
 </ScrollStage>
 
 <!--
-0.5 min · 41–41.5 elapsed
+0.5 min · 40.5–41 elapsed
 
 Point back at what we’ve done: “Readability counts” was chapter one, “Simple is better than complex” was KISS, “Errors should never pass silently” was step 6 of the refactor.
 -->
 
 ---
 
-<div class="kicker">PYTHON · DATACLASSES AND ENUMS</div>
+<div class="kicker">PYTHON · DATACLASSES AND PROPERTIES</div>
 
 # Give your data a shape
 
-<div class="code-notes">
+<div class="code-notes tiny">
 <div>
 
 ```python
 from dataclasses import dataclass
-from enum import StrEnum
-
-
-class BookingStatus(StrEnum):
-    ACTIVE = "active"
-    CANCELLED = "cancelled"
 
 
 @dataclass(frozen=True, slots=True)
@@ -2243,30 +2267,34 @@ class Booking:
     booking_id: str
     seats: int
     total_cents: int
-    status: BookingStatus = BookingStatus.ACTIVE
+    payments: tuple[int, ...] = ()    # cents paid so far
+
+    @property
+    def balance_cents(self) -> int:
+        return self.total_cents - sum(self.payments)
+
+
+booking = Booking("A42", seats=2, total_cents=7000,
+                  payments=(2000, 1500))
+booking.balance_cents    # 3500: looks like a field, runs a method
 ```
 
 </div>
 <div>
-<span class="label">The problem</span>
-<ul class="check-list bad">
-<li><code>bookings[booking_id][1]</code>: which field was that?</li>
-<li><code>status == "canceled"</code>: a typo that passes silently</li>
-</ul>
-<span class="label">After</span>
 <ul class="check-list good">
-<li><code>booking.total_cents</code> reads itself</li>
-<li><code>BookingStatus.CANCELLED</code> is checked by mypy</li>
-<li><code>frozen</code>: nobody edits a booking in place</li>
+<li><code>booking.total_cents</code> instead of <code>bookings[booking_id][1]</code></li>
+<li><code>@property</code>: <code>balance_cents</code> reads like a field but runs a method each time, so it’s never stale</li>
+<li><code>frozen=True</code>: nobody edits a booking in place</li>
+<li><code>slots=True</code>: a fixed set of attributes, less memory, and no surprise attributes from typos</li>
 <li><code>__init__</code>, <code>__repr__</code>, <code>__eq__</code> for free</li>
 </ul>
 </div>
 </div>
 
 <!--
-0.5 min · 41.5–42 elapsed
+0.5 min · 41–41.5 elapsed
 
-A dataclass doesn’t validate input: Pydantic does that at the API boundary. StrEnum is 3.11+, slots=True is 3.10+.
+A dataclass doesn’t validate input: Pydantic does that at the API boundary (next slide). `slots=True` (3.10+) stores attributes in fixed slots instead of a per-object `__dict__`; on a non-frozen class, `booking.seat = 3` then raises AttributeError instead of quietly adding a new attribute.
 -->
 
 ---
@@ -2313,7 +2341,7 @@ BookingRequest(booking_id="A42", seats=0)
 </ul>
 
 <!--
-0.5 min · 42–42.5 elapsed
+0.5 min · 41.5–42 elapsed
 
 The string "2" becomes the int 2 because Pydantic coerces compatible input by default; strict mode turns that off.
 -->
@@ -2365,7 +2393,7 @@ total_cents(self, seats: int) -> int
 </div>
 
 <!--
-0.5 min · 42.5–43 elapsed
+0.5 min · 42–42.5 elapsed
 
 This is the class-level documentation from the comments slide: the place where a formula or a rounding rule belongs.
 -->
@@ -2435,7 +2463,7 @@ int
 </ul>
 
 <!--
-0.5 min · 43–43.5 elapsed
+0.5 min · 42.5–43 elapsed
 -->
 
 ---
@@ -2473,7 +2501,7 @@ uv run mkdocs build
 </div>
 
 <!--
-0.5 min · 43.5–44 elapsed
+0.5 min · 43–43.5 elapsed
 
 Each tool is a dev dependency: `uv add --dev pdoc` (or sphinx, or mkdocs mkdocstrings[python]). Run the build in CI so the docs never go stale.
 -->
@@ -2517,7 +2545,7 @@ logging.basicConfig(
 </div>
 
 <!--
-0.5 min · 44–44.5 elapsed
+0.5 min · 43.5–44 elapsed
 -->
 
 ---
@@ -2563,7 +2591,7 @@ seats = list(range(10))  # still the built-in
 </ul>
 
 <!--
-0.5 min · 44.5–45 elapsed
+0.5 min · 44–44.5 elapsed
 -->
 
 ---
@@ -2650,7 +2678,7 @@ service = BookingService(store=memory_store)
 </div>
 
 <!--
-1 min · 45–46 elapsed
+1 min · 44.5–45.5 elapsed
 
 Teach this through questions. Ask each one and wait for predictions before clicking.
 
@@ -2741,7 +2769,7 @@ postgres.create(booking)  # self.store.save -> Postgres...save
 </div>
 
 <!--
-1 min · 46–47 elapsed
+1 min · 45.5–46.5 elapsed
 
 **Q4 (before clicking):** “Which save runs for each call?” Let them trace `memory.create(booking)` and `postgres.create(booking)` to `self.store.save(booking)`. **Click:** the trace comments.
 
@@ -2777,7 +2805,7 @@ if (booking := find(index, "A42")) is None:                         # 3.8 · PEP
 </ul>
 
 <!--
-0.5 min · 47–47.5 elapsed
+0.5 min · 46.5–47 elapsed
 -->
 
 ---
@@ -2795,7 +2823,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 47.5–48 elapsed
+0.5 min · 47–47.5 elapsed
 -->
 
 ---
@@ -2820,7 +2848,7 @@ chapter: Features to learn
 </ul>
 
 <!--
-0.5 min · 48–48.5 elapsed
+0.5 min · 47.5–48 elapsed
 -->
 
 ---
@@ -2863,7 +2891,7 @@ for seat, guest in zip(seats, guests, strict=True):
 </ul>
 
 <!--
-0.5 min · 48.5–49 elapsed
+0.5 min · 48–48.5 elapsed
 -->
 
 ---
@@ -2907,7 +2935,7 @@ top_three = counts.most_common(3)
 </ul>
 
 <!--
-0.5 min · 49–49.5 elapsed
+0.5 min · 48.5–49 elapsed
 -->
 
 ---
@@ -2954,7 +2982,7 @@ all_valid = all(b.seats >= 1 for b in bookings)
 </ul>
 
 <!--
-0.5 min · 49.5–50 elapsed
+0.5 min · 49–49.5 elapsed
 -->
 
 ---
@@ -2992,7 +3020,7 @@ groups = [n for n in seat_counts if n > 10]
 </ul>
 
 <!--
-0.5 min · 50–50.5 elapsed
+0.5 min · 49.5–50 elapsed
 -->
 
 ---
@@ -3020,15 +3048,15 @@ f"{booking!r}"                # repr() instead of str()
 <div>
 <ul class="check-list plain">
 <li>After the colon comes the format spec: width, alignment, precision, thousands separators, dates.</li>
-<li><code>=</code> (3.8+) prints the expression and its value: perfect for debugging.</li>
-<li><code>!r</code> uses <code>repr()</code>, handy in logs.</li>
+<li><code>=</code> (3.8+) prints the expression and its value; <code>!r</code> uses <code>repr()</code>. Both are handy in logs.</li>
+<li>Under the hood, the format spec goes to the object’s <code>__format__</code> method. That’s how <code>datetime</code> understands <code>%Y-%m-%d</code>.</li>
 <li>Many more tricks: <a href="https://fstring.help/cheat/">fstring.help</a>.</li>
 </ul>
 </div>
 </div>
 
 <!--
-0.5 min · 50.5–51 elapsed
+0.5 min · 50–50.5 elapsed
 -->
 
 ---
@@ -3064,7 +3092,47 @@ seat_map.cache_info()   # CacheInfo(hits=1, misses=1, ...)
 </div>
 
 <!--
+0.5 min · 50.5–51 elapsed
+-->
+
+---
+
+<div class="kicker">BONUS · MUTABILITY</div>
+
+# Change it in place, or get a new object?
+
+<div class="code-notes">
+<div>
+
+```python
+seats = [3, 1, 2]
+result = seats.sort()    # sorts in place...
+result                   # ...and returns None
+ordered = sorted(seats)  # sorted() makes a new list
+
+def reserve(taken: list[int]) -> None:
+    taken.append(4)      # the caller's list changes too
+
+code = "a42"
+code.upper()             # 'A42' is a new string
+code                     # still 'a42': str is immutable
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li>Every argument is passed the same way: a reference to the same object. Nothing is copied.</li>
+<li>What differs is mutability. Mutable: <code>list</code>, <code>dict</code>, <code>set</code>, most of your classes. Immutable: <code>int</code>, <code>str</code>, <code>tuple</code>, <code>frozenset</code>.</li>
+<li>In-place methods (<code>sort</code>, <code>append</code>, <code>update</code>, <code>add</code>) return <code>None</code> on purpose, so you can’t mistake them for copies.</li>
+<li>A tuple can’t change, but a list inside it can.</li>
+</ul>
+</div>
+</div>
+
+<!--
 0.5 min · 51–51.5 elapsed
+
+Python’s model is “call by sharing”: there is no pass-by-copy and no pass-by-reference in the C++ sense. Assigning or passing never copies; mutating a shared mutable object is visible everywhere. Which is exactly why the next slide exists.
 -->
 
 ---
@@ -3324,13 +3392,15 @@ uv run pytest -q
 
 <div class="panels two">
 <div class="panel"><b>Start here</b><h2>mypy</h2><p>The reference checker. Turn on <code>strict</code> for the modules you own and tighten from there.</p></div>
-<div class="panel"><b>Compare on your code</b><h2>Pyright · ty · Pyrefly</h2><p>Faster or stricter in places. Compare diagnostics, editor support and library stubs on your own repo.</p></div>
+<div class="panel"><b>Compare on your code</b><h2>Pyright · ty · Pyrefly</h2><p>Faster or stricter in places; compare them on your own repo. VS Code’s <strong>Pylance</strong> is Microsoft’s closed-source build on Pyright; <strong>basedpyright</strong> is an open-source fork with extra checks.</p></div>
 </div>
 
 <div class="statement">Several checkers in the editor is fine. One of them blocks the merge.</div>
 
 <!--
 0.5 min · 55.5–56 elapsed
+
+Pyright is Microsoft’s open-source checker; Pylance wraps it for VS Code with extra, closed-source features; basedpyright is a community fork that brings several of those features to any editor. ty is Astral’s (the Ruff and uv team), Pyrefly is Meta’s.
 -->
 
 ---
@@ -4088,7 +4158,7 @@ Close on the booking API: the same names, checks and tests made it easy for peop
 -->
 
 ---
-chapter: Resources
+part: end
 routeAlias: resources
 ---
 

@@ -433,3 +433,6 @@
 
 /* ── Thanks slide ───────────────────────────────────────────────────── */
 .thanks-row { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-top: 8px; }
+
+/* Wider label column for longer row names (GRASP). */
+.rows.xl > div { grid-template-columns: 190px 1fr; }

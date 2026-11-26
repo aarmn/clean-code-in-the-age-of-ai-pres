@@ -4,14 +4,15 @@
  * opaque slide background and would be hidden).
  *
  * Labels come from slide frontmatter, so nothing depends on page numbers:
- *   part: classic | ai   -> on the slide where that part starts
- *   chapter: Patterns    -> on the first slide of a chapter
- *   footer: false        -> hide the footer on that slide (the cover)
+ *   part: classic | ai | end -> on the slide where that part starts
+ *                               (end = the closing resource pages, purple again)
+ *   chapter: Patterns        -> on the first slide of a chapter
+ *   footer: false            -> hide the footer on that slide (the cover)
  */
 type Fm = Record<string, any>
 interface Route { no: number, meta?: { slide?: { frontmatter?: Fm } } }
 
-const PARTS: Record<string, string> = { classic: '01 / CLASSIC', ai: '02 / AGE OF AI' }
+const PARTS: Record<string, string> = { classic: '01 / CLASSIC', ai: '02 / AGE OF AI', end: 'RESOURCES' }
 
 function fm(route?: Route): Fm {
   return route?.meta?.slide?.frontmatter ?? {}
@@ -26,8 +27,8 @@ function lastBefore(slides: Route[], no: number, key: string): string | undefine
 function label(slides: Route[], no: number): string {
   const part = lastBefore(slides, no, 'part')
   const partLabel = part ? PARTS[part] ?? part : 'CLEAN CODE IN THE AI AGE'
-  // A part's own title page shows just the part.
-  if (fm(slides[no - 1]).part)
+  // A part's own title page, and the closing pages, show just the part.
+  if (fm(slides[no - 1]).part || part === 'end')
     return partLabel
   const chapter = lastBefore(slides, no, 'chapter')
   return chapter && part ? `${partLabel}  ·  ${chapter.toUpperCase()}` : partLabel
