@@ -119,7 +119,7 @@ _Generated from the speaker notes in `slides.md`._
 | 111 | 86.5–87.5 | 02 · Age of AI · Review | Make it readable. Make it checkable. |
 | 112 | 87.5–88 | 02 · Age of AI · Resources | Watch |
 | 113 | 88–88.5 | 02 · Age of AI · Resources | Read, then practice |
-| 114 | 88.5–89.5 | 02 · Age of AI · Resources | Six books worth your next year |
+| 114 | 88.5–89.5 | 02 · Age of AI · Resources | Seven books worth your next year |
 | 115 | 89.5–90 | 02 · Age of AI · Resources | Thanks for listening! |
 
 ## Demo cues

@@ -4135,7 +4135,7 @@ The English tip matters more every year: most documentation is in English, and a
 
 <div class="kicker">KEEP GOING</div>
 
-# Six books worth your next year
+# Seven books worth your next year
 
 </div>
 </div>
@@ -4145,6 +4145,7 @@ The English tip matters more every year: most documentation is in English, and a
 <BookCard title="Refactoring" author="Martin Fowler" isbn="9780134757599" href="https://martinfowler.com/books/refactoring.html" note="2nd edition" />
 <BookCard title="A Philosophy of Software Design" author="John Ousterhout" isbn="9781732102200" href="https://web.stanford.edu/~ouster/cgi-bin/book.php" />
 <BookCard title="Fluent Python" author="Luciano Ramalho" isbn="9781492056355" href="https://www.fluentpython.com/" note="2nd edition" />
+<BookCard title="Python Notes for Professionals" author="GoalKicker.com" cover="https://books.goalkicker.com/PythonBook/PythonGrow.png" href="https://books.goalkicker.com/PythonBook/" note="Free PDF" />
 <BookCard title="Architecture Patterns with Python" author="Harry Percival & Bob Gregory" isbn="9781492052203" href="https://www.cosmicpython.com/" note="Free online" />
 <BookCard title="AI Engineering" author="Chip Huyen" isbn="9781098166304" href="https://github.com/chiphuyen/aie-book" />
 </div>
@@ -4152,7 +4153,7 @@ The English tip matters more every year: most documentation is in English, and a
 <!--
 1 min · 88.5–89.5 elapsed
 
-Classic design (Clean Code, Refactoring, A Philosophy of Software Design), Python in depth (Fluent Python, Architecture Patterns with Python, free to read online), and building with models (AI Engineering). The QR codes are on the last slide.
+Classic design (Clean Code, Refactoring, A Philosophy of Software Design), Python in depth (Fluent Python; Python Notes for Professionals, a free PDF compiled from Stack Overflow Documentation; Architecture Patterns with Python, free to read online), and building with models (AI Engineering). The QR codes are on the last slide.
 -->
 
 ---

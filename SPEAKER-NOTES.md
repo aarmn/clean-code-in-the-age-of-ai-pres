@@ -844,13 +844,13 @@ _02 · Age of AI · Resources_
 
 The English tip matters more every year: most documentation is in English, and an agent can only do what your task description actually says.
 
-## 114. Six books worth your next year
+## 114. Seven books worth your next year
 
 _02 · Age of AI · Resources_
 
 1 min · 88.5–89.5 elapsed
 
-Classic design (Clean Code, Refactoring, A Philosophy of Software Design), Python in depth (Fluent Python, Architecture Patterns with Python, free to read online), and building with models (AI Engineering). The QR codes are on the last slide.
+Classic design (Clean Code, Refactoring, A Philosophy of Software Design), Python in depth (Fluent Python; Python Notes for Professionals, a free PDF compiled from Stack Overflow Documentation; Architecture Patterns with Python, free to read online), and building with models (AI Engineering). The QR codes are on the last slide.
 
 ## 115. Thanks for listening!
 

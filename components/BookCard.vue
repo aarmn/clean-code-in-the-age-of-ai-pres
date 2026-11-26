@@ -2,20 +2,24 @@
 import { ref } from 'vue'
 
 /**
- * A book with its cover. The cover image comes from Open Library by ISBN;
- * if it can't load (offline, not found), a typographic cover shows instead.
+ * A book with its cover. The cover comes from `cover` if given, otherwise from
+ * Open Library by ISBN; if it can't load (offline, not found), a typographic
+ * cover shows instead.
  */
 const props = defineProps<{
   title: string
   author: string
-  isbn: string
   href: string
+  isbn?: string
+  /** Direct cover image URL, for books without an ISBN on Open Library. */
+  cover?: string
   /** Short note under the title, e.g. "Free online". */
   note?: string
 }>()
 
 const coverFailed = ref(false)
-const coverUrl = `https://covers.openlibrary.org/b/isbn/${props.isbn}-M.jpg?default=false`
+const coverUrl = props.cover
+  ?? (props.isbn ? `https://covers.openlibrary.org/b/isbn/${props.isbn}-M.jpg?default=false` : undefined)
 </script>
 
 <template>
@@ -25,7 +29,7 @@ const coverUrl = `https://covers.openlibrary.org/b/isbn/${props.isbn}-M.jpg?defa
         <span class="book-fallback-title">{{ title }}</span>
         <span class="book-fallback-author">{{ author }}</span>
       </div>
-      <img v-if="!coverFailed" :src="coverUrl" :alt="`Cover of ${title}`" loading="eager" @error="coverFailed = true">
+      <img v-if="coverUrl && !coverFailed" :src="coverUrl" :alt="`Cover of ${title}`" loading="eager" @error="coverFailed = true">
     </div>
     <div class="book-meta">
       <strong>{{ title }}</strong>
