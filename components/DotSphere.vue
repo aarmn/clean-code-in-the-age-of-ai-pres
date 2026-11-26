@@ -3,9 +3,9 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 /**
  * A slowly turning triangle-mesh sphere.
- * An icosphere (subdivided icosahedron) whose vertices breathe with smooth noise,
- * drawn as softly lit faces, glowing edges and vertex dots. Optional orbit rings
- * of particles circle it. Everything is shaded by depth: front bright, back faint.
+ * An icosphere (subdivided icosahedron) drawn as faintly lit faces, thin edges and
+ * small vertex dots. A soft wave of light travels across the edges, so the mesh
+ * gently pulses. Everything is shaded by depth: front bright, back faint.
  */
 const props = withDefaults(defineProps<{
   size?: number
@@ -15,17 +15,17 @@ const props = withDefaults(defineProps<{
   period?: number
   /** Vertex dot radius in CSS pixels. */
   dotRadius?: number
-  /** How far the noise pushes vertices in and out (fraction of the radius). */
+  /** Optional surface displacement (fraction of the radius); 0 keeps a perfect sphere. */
   noise?: number
-  /** Draw orbiting particle rings. */
-  rings?: boolean
+  /** A wave of light travelling across the edges. */
+  pulse?: boolean
 }>(), {
   size: 360,
   detail: 3,
-  period: 30,
-  dotRadius: 1.4,
-  noise: 0.07,
-  rings: false,
+  period: 60,
+  dotRadius: 1.1,
+  noise: 0,
+  pulse: true,
 })
 
 const canvas = ref<HTMLCanvasElement>()
@@ -39,6 +39,12 @@ const reduceMotion = typeof window !== 'undefined'
 let verts: number[][] = []
 let faces: number[][] = []
 let edges: number[][] = []
+let edgePhase: Float32Array = new Float32Array()
+
+function normalize([x, y, z]: number[]) {
+  const l = Math.hypot(x, y, z)
+  return [x / l, y / l, z / l]
+}
 
 function buildMesh(level: number) {
   const t = (1 + Math.sqrt(5)) / 2
@@ -80,41 +86,46 @@ function buildMesh(level: number) {
       }
     }
   }
+  // Each edge's place in the travelling light wave, fixed to the mesh so it turns with it.
+  const phase = new Float32Array(e.length)
+  e.forEach(([p, q], i) => {
+    const mx = (v[p][0] + v[q][0]) / 2, my = (v[p][1] + v[q][1]) / 2, mz = (v[p][2] + v[q][2]) / 2
+    phase[i] = (mx * 1.4 + my * 2.6 + mz * 0.8) * 2.1
+  })
   verts = v
   faces = f
   edges = e
+  edgePhase = phase
 }
 
-function normalize([x, y, z]: number[]) {
-  const l = Math.hypot(x, y, z)
-  return [x / l, y / l, z / l]
-}
-
-/** Smooth, cheap 3D noise in [-1, 1], animated by s (seconds). */
 function wobble(x: number, y: number, z: number, s: number) {
-  return 0.55 * Math.sin(2.6 * x + 0.9 * s) * Math.sin(2.9 * y + 0.7 * s + 1.3) * Math.sin(2.3 * z + 1.1 * s + 2.1)
-    + 0.30 * Math.sin(4.7 * x + 3.9 * y + 1.6 * s)
-    + 0.15 * Math.sin(6.1 * z - 4.3 * x + 2.3 * s)
+  return 0.6 * Math.sin(2.6 * x + 0.4 * s) * Math.sin(2.9 * y + 0.3 * s + 1.3) * Math.sin(2.3 * z + 0.5 * s + 2.1)
+    + 0.4 * Math.sin(4.1 * x + 3.7 * y + 0.6 * s)
 }
 
-// Palette: indigo (back) → violet → fuchsia (front).
-const BACK = [99, 102, 241]
+// Palette: indigo (back) → violet → soft pink (front).
+const BACK = [88, 86, 214]
 const MIDC = [167, 139, 250]
-const FRONT = [240, 171, 252]
-function shade(d: number): number[] {
-  const [a, b, k] = d < 0.5 ? [BACK, MIDC, d * 2] : [MIDC, FRONT, (d - 0.5) * 2]
+const FRONT = [233, 190, 255]
+const GLOW = [250, 205, 255]
+function mix(a: number[], b: number[], k: number) {
   return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k]
+}
+function shade(d: number) {
+  return d < 0.5 ? mix(BACK, MIDC, d * 2) : mix(MIDC, FRONT, (d - 0.5) * 2)
 }
 const rgba = (c: number[], a: number) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a.toFixed(3)})`
 
 // ── Drawing ───────────────────────────────────────────────────────────
-const BANDS = 8
+const DEPTH_BANDS = 6
+const GLOW_BANDS = 4
+
 function draw(time: number) {
   const el = canvas.value
   const ctx = el?.getContext('2d')
   if (!el || !ctx)
     return
-  const dpr = Math.min(3, (window.devicePixelRatio || 1) * 1.5)
+  const dpr = Math.min(2.5, (window.devicePixelRatio || 1) * 1.5)
   const px = Math.round(props.size * dpr)
   if (el.width !== px) {
     el.width = px
@@ -125,19 +136,18 @@ function draw(time: number) {
 
   const s = time / 1000
   const half = props.size / 2
-  const R = half * (props.rings ? 0.6 : 0.74)
+  const R = half * 0.74
   const camera = 5
   const yaw = s * (Math.PI * 2 / props.period)
-  const tilt = 0.38
+  const tilt = 0.36
   const cy = Math.cos(yaw), sy = Math.sin(yaw), ct = Math.cos(tilt), st = Math.sin(tilt)
 
-  // Transform vertices: noise displacement, then spin (Y) and tilt (X).
   const n = verts.length
   const X = new Float32Array(n), Y = new Float32Array(n), Z = new Float32Array(n)
   const SX = new Float32Array(n), SY = new Float32Array(n), K = new Float32Array(n)
   for (let i = 0; i < n; i++) {
     const [vx, vy, vz] = verts[i]
-    const r = 1 + props.noise * wobble(vx, vy, vz, s)
+    const r = props.noise ? 1 + props.noise * wobble(vx, vy, vz, s) : 1
     const x0 = vx * r, y0 = vy * r, z0 = vz * r
     const x1 = x0 * cy + z0 * sy
     const z1 = -x0 * sy + z0 * cy
@@ -150,27 +160,28 @@ function draw(time: number) {
     SY[i] = half + y2 * R * k
   }
 
-  // Faces: shade front-facing triangles by a soft light from the upper left.
+  // Faces: a faint, softly lit skin on the front half.
   const L = normalize([-0.45, -0.55, 0.7])
-  const faceBands: number[][][] = Array.from({ length: BANDS }, () => [])
+  const faceBands: number[][][] = Array.from({ length: 5 }, () => [])
   for (const f of faces) {
     const [a, b, c] = f
     const ux = X[b] - X[a], uy = Y[b] - Y[a], uz = Z[b] - Z[a]
     const vx = X[c] - X[a], vy = Y[c] - Y[a], vz = Z[c] - Z[a]
     let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx
-    const mx = X[a] + X[b] + X[c], my = Y[a] + Y[b] + Y[c], mz = Z[a] + Z[b] + Z[c]
-    if (nx * mx + ny * my + nz * mz < 0) { nx = -nx; ny = -ny; nz = -nz }
+    if (nx * (X[a] + X[b] + X[c]) + ny * (Y[a] + Y[b] + Y[c]) + nz * (Z[a] + Z[b] + Z[c]) < 0) {
+      nx = -nx; ny = -ny; nz = -nz
+    }
     const len = Math.hypot(nx, ny, nz) || 1
-    if (nz / len <= 0.02)
+    if (nz / len <= 0.05)
       continue
     const light = Math.max(0, (nx * L[0] + ny * L[1] + nz * L[2]) / len)
-    faceBands[Math.min(BANDS - 1, Math.floor(light * BANDS))].push(f)
+    faceBands[Math.min(4, Math.floor(light * 5))].push(f)
   }
   faceBands.forEach((band, i) => {
     if (!band.length)
       return
-    const lvl = (i + 0.5) / BANDS
-    ctx.fillStyle = rgba(shade(0.35 + lvl * 0.65), 0.025 + lvl * 0.13)
+    const lvl = (i + 0.5) / 5
+    ctx.fillStyle = rgba(shade(0.4 + lvl * 0.6), 0.01 + lvl * 0.05)
     ctx.beginPath()
     for (const [a, b, c] of band) {
       ctx.moveTo(SX[a], SY[a])
@@ -181,19 +192,24 @@ function draw(time: number) {
     ctx.fill()
   })
 
-  // Edges, grouped by depth so each band is a single stroke.
-  const edgeBands: number[][][] = Array.from({ length: BANDS }, () => [])
-  for (const e of edges) {
+  // Edges: grouped by depth and by how lit they are by the travelling wave.
+  const bands: number[][][] = Array.from({ length: DEPTH_BANDS * GLOW_BANDS }, () => [])
+  edges.forEach((e, i) => {
     const d = ((Z[e[0]] + Z[e[1]]) / 2 + 1) / 2
-    edgeBands[Math.max(0, Math.min(BANDS - 1, Math.floor(d * BANDS)))].push(e)
-  }
-  const lineScale = props.size / 400
-  edgeBands.forEach((band, i) => {
+    const wave = props.pulse ? Math.max(0, Math.sin(s * 0.9 - edgePhase[i])) ** 6 : 0
+    const db = Math.max(0, Math.min(DEPTH_BANDS - 1, Math.floor(d * DEPTH_BANDS)))
+    const gb = Math.min(GLOW_BANDS - 1, Math.floor(wave * GLOW_BANDS))
+    bands[db * GLOW_BANDS + gb].push(e)
+  })
+  const lineScale = props.size / 500
+  bands.forEach((band, i) => {
     if (!band.length)
       return
-    const d = (i + 0.5) / BANDS
-    ctx.strokeStyle = rgba(shade(d), 0.05 + d * d * 0.55)
-    ctx.lineWidth = Math.max(0.35, (0.35 + d * 0.75) * lineScale)
+    const d = (Math.floor(i / GLOW_BANDS) + 0.5) / DEPTH_BANDS
+    const g = (i % GLOW_BANDS) / (GLOW_BANDS - 1)
+    const base = 0.025 + d * d * 0.17
+    ctx.strokeStyle = rgba(mix(shade(d), GLOW, g * 0.7), base * (1 + g * 1.6))
+    ctx.lineWidth = Math.max(0.3, (0.3 + d * 0.45) * lineScale * (1 + g * 0.35))
     ctx.beginPath()
     for (const [a, b] of band) {
       ctx.moveTo(SX[a], SY[a])
@@ -202,53 +218,15 @@ function draw(time: number) {
     ctx.stroke()
   })
 
-  // Vertex dots, front ones brighter and larger.
+  // Vertex dots: small, front half only.
   for (let i = 0; i < n; i++) {
     const d = (Z[i] + 1) / 2
-    if (d < 0.35)
+    if (d < 0.45)
       continue
-    ctx.fillStyle = rgba(shade(d), 0.15 + d * 0.85)
+    ctx.fillStyle = rgba(shade(d), 0.08 + (d - 0.45) * 0.9)
     ctx.beginPath()
-    ctx.arc(SX[i], SY[i], props.dotRadius * K[i] * (0.4 + d * 0.8), 0, Math.PI * 2)
+    ctx.arc(SX[i], SY[i], props.dotRadius * K[i] * (0.45 + d * 0.55), 0, Math.PI * 2)
     ctx.fill()
-  }
-
-  if (props.rings)
-    drawRings(ctx, s, half, R, camera)
-}
-
-function drawRings(ctx: CanvasRenderingContext2D, s: number, half: number, R: number, camera: number) {
-  const rings = [
-    { count: 120, radius: 1.34, tiltX: 1.18, tiltZ: 0.32, speed: 0.22, size: 1.15 },
-    { count: 80, radius: 1.52, tiltX: 1.42, tiltZ: -0.5, speed: -0.14, size: 0.9 },
-  ]
-  for (const ring of rings) {
-    const cx = Math.cos(ring.tiltX), sx = Math.sin(ring.tiltX)
-    const cz = Math.cos(ring.tiltZ), sz = Math.sin(ring.tiltZ)
-    for (let i = 0; i < ring.count; i++) {
-      const a = (i / ring.count) * Math.PI * 2 + s * ring.speed
-      const jitter = 1 + 0.03 * Math.sin(i * 12.9898 + s * 0.8)
-      let x = Math.cos(a) * ring.radius * jitter
-      let y = 0
-      let z = Math.sin(a) * ring.radius * jitter
-      const y1 = y * cx - z * sx
-      const z1 = y * sx + z * cx
-      y = y1; z = z1
-      const x2 = x * cz - y * sz
-      const y2 = x * sz + y * cz
-      x = x2; y = y2
-      const k = camera / (camera - z)
-      const px = half + x * R * k
-      const py = half + y * R * k
-      // Dim particles that pass behind the sphere.
-      const behind = z < 0 && Math.hypot(x, y) < 1.05
-      const d = (z / ring.radius + 1) / 2
-      const alpha = behind ? 0.06 : 0.2 + d * 0.7
-      ctx.fillStyle = rgba(shade(0.4 + d * 0.6), alpha)
-      ctx.beginPath()
-      ctx.arc(px, py, ring.size * k * (0.5 + d * 0.7), 0, Math.PI * 2)
-      ctx.fill()
-    }
   }
 }
 
@@ -296,10 +274,10 @@ onBeforeUnmount(() => {
 .dot-sphere::before {
   content: "";
   position: absolute;
-  inset: 18%;
+  inset: 14%;
   border-radius: 50%;
-  background: radial-gradient(circle at 42% 38%, rgba(196, 167, 255, 0.22), rgba(139, 92, 246, 0.08) 45%, transparent 70%);
-  filter: blur(22px);
+  background: radial-gradient(circle at 40% 36%, rgba(196, 167, 255, 0.16), rgba(139, 92, 246, 0.06) 50%, transparent 72%);
+  filter: blur(26px);
 }
 canvas {
   position: relative;

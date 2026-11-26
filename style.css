@@ -36,6 +36,7 @@
 
 /* ── Slide base: centered content, space kept clear for the footer ──── */
 .slidev-layout {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,13 +160,14 @@
 
 .slidev-layout table { width: 100%; margin: 6px 0 14px; border-collapse: collapse; font-size: 16px; }
 .slidev-layout th { color: var(--accent); font: 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; text-align: left; }
-.slidev-layout td, .slidev-layout th { padding: 9px 12px; border-bottom: 1px solid var(--line); }
+.slidev-layout td, .slidev-layout th { padding: 8px 12px; border-bottom: 1px solid var(--line); }
 .slidev-layout tbody tr:hover td { background: rgba(var(--accent-rgb), 0.05); }
 
 /* ── Cover, section dividers, finish ───────────────────────────────── */
 .cover.slidev-layout { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
 .cover-text { position: relative; z-index: 1; max-width: 500px; }
-.cover-sphere { position: absolute !important; right: -70px; top: 50%; transform: translateY(-50%); }
+/* Big and cut off by the right edge of the slide. */
+.cover-sphere { position: absolute !important; right: -270px; top: 50%; transform: translateY(-50%); }
 .cover-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
 .cover-meta span {
   padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 999px;
@@ -287,7 +289,7 @@
 /* ── Footer chrome (global-top.vue) ─────────────────────────────────── */
 .deck-chrome { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
 .deck-fade {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 110px;
+  position: absolute; left: 0; right: 0; bottom: 0; height: 92px;
   background: linear-gradient(to top, rgba(13, 9, 24, 0.97) 0%, rgba(13, 9, 24, 0.8) 42%, rgba(13, 9, 24, 0) 100%);
   backdrop-filter: blur(6px);
   -webkit-mask-image: linear-gradient(to top, #000 50%, transparent);
@@ -302,4 +304,97 @@
 .deck-foot .page { color: var(--accent); }
 .deck-chrome.is-ai .page { color: var(--ai); }
 
-@media (prefers-reduced-motion: reduce) { .slidev-layout * { scroll-behavior: auto !important; } }
+/* ── Long click-through code (refactor sequence) ────────────────────── */
+.code-notes.small .slidev-code, .code-notes.small .shiki-magic-move-container {
+  font-size: 12.5px !important; line-height: 1.43 !important;
+}
+.code-notes.no-jump.small { min-height: 368px; }
+.code-notes.no-jump.wide { min-height: 300px; }
+
+/* ── Sticker (DRY) ──────────────────────────────────────────────────── */
+.compare > div { position: relative; }
+.sticker {
+  position: absolute; top: -18px; right: -10px; z-index: 2;
+  padding: 7px 14px 8px; border-radius: 10px;
+  background: linear-gradient(135deg, #f9a8d4, #c4a7ff); color: #1a1030;
+  font: 700 15px/1 var(--serif); letter-spacing: .01em;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+  transform: rotate(7deg);
+}
+.sticker.slidev-vclick-target { transition: opacity .25s ease, transform .5s cubic-bezier(.2, 1.7, .4, 1); }
+.sticker.slidev-vclick-hidden { transform: rotate(-8deg) scale(.3); }
+
+/* ── One-sentence pages ─────────────────────────────────────────────── */
+.one-note.slidev-layout { align-items: center; text-align: center; }
+.one-note h1 { font-size: 48px; line-height: 1.12; max-width: 840px; margin: 0; }
+.one-note .lead { margin: 22px auto 0; max-width: 700px; }
+
+/* The word that won't sit still: colour and font both morph. */
+.fuzzy {
+  display: inline-block; font-style: italic; padding: 0 .06em;
+  background: linear-gradient(90deg, #c4a7ff, #f0abfc, #7ee0f5, #c4a7ff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: fuzzy 5s ease-in-out infinite;
+}
+@keyframes fuzzy {
+  0%, 100% { font-variation-settings: "wght" 320, "SOFT" 0, "WONK" 0, "opsz" 144; background-position: 0% 50%; filter: blur(0); letter-spacing: 0; }
+  35% { font-variation-settings: "wght" 880, "SOFT" 100, "WONK" 1, "opsz" 9; background-position: 60% 50%; filter: blur(.7px); letter-spacing: .04em; }
+  70% { font-variation-settings: "wght" 520, "SOFT" 40, "WONK" 1, "opsz" 72; background-position: 100% 50%; filter: blur(.2px); letter-spacing: -.01em; }
+}
+
+/* ── Quotes ─────────────────────────────────────────────────────────── */
+.slidev-layout blockquote {
+  margin: 4px 0 14px !important; padding: 16px 22px !important;
+  border: 0 !important; border-left: 3px solid var(--accent) !important; border-radius: 0 12px 12px 0 !important;
+  background: rgba(var(--accent-rgb), 0.09) !important;
+  font: italic 430 19px/1.5 var(--serif) !important; color: var(--paper) !important;
+}
+.slidev-layout blockquote p { margin: 0; }
+.cite { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
+
+/* ── Questions and answers (Protocol detour) ────────────────────────── */
+.qa .q { margin: 0 0 12px; font: italic 500 19px/1.35 var(--serif); color: var(--paper); }
+.qa .a { margin: 0 0 14px; padding-left: 12px; border-left: 2px solid var(--good); font-size: 15px; line-height: 1.45; }
+.qa .a.final { border-left-color: var(--accent-2); color: var(--paper); font-weight: 600; }
+
+/* ── The Zen of Python: cherry blossom ──────────────────────────────── */
+.zen.slidev-layout {
+  --accent: #f9a8d4; --accent-rgb: 244, 114, 182; --accent-2: #fbcfe8;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 55% 60% at 88% 12%, rgba(244, 114, 182, 0.22), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 8% 95%, rgba(251, 207, 232, 0.08), transparent 70%),
+    #150d1a;
+}
+.zen h1 { font-size: 46px; font-style: italic; font-weight: 500; }
+.zen-lines { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 36px; max-width: 760px; margin-top: 8px; }
+.zen-lines p { margin: 0; font: italic 400 21px/1.35 var(--serif); color: #fde7f3; }
+.zen-lines p::before { content: "❀ "; color: var(--accent); font-style: normal; font-size: 14px; }
+.zen-branch { position: absolute; top: -10px; right: -20px; width: 360px; opacity: .9; }
+.petals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.petals i {
+  position: absolute; top: -20px; width: 11px; height: 8px; border-radius: 70% 0 70% 0;
+  background: linear-gradient(135deg, #fbcfe8, #f472b6); opacity: .75;
+  animation: petal-fall 11s linear infinite;
+}
+.petals i:nth-child(1) { left: 58%; animation-delay: 0s; }
+.petals i:nth-child(2) { left: 66%; animation-delay: -2s; animation-duration: 13s; }
+.petals i:nth-child(3) { left: 74%; animation-delay: -4s; }
+.petals i:nth-child(4) { left: 82%; animation-delay: -6s; animation-duration: 9s; }
+.petals i:nth-child(5) { left: 90%; animation-delay: -1s; animation-duration: 12s; }
+.petals i:nth-child(6) { left: 48%; animation-delay: -7s; animation-duration: 14s; }
+.petals i:nth-child(7) { left: 70%; animation-delay: -9s; }
+.petals i:nth-child(8) { left: 86%; animation-delay: -3s; animation-duration: 10s; }
+.petals i:nth-child(9) { left: 38%; animation-delay: -5s; animation-duration: 15s; }
+.petals i:nth-child(10) { left: 95%; animation-delay: -8s; }
+@keyframes petal-fall {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-60px, 300px) rotate(200deg); }
+  100% { transform: translate(-20px, 620px) rotate(400deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slidev-layout * { scroll-behavior: auto !important; }
+  .fuzzy, .petals i { animation: none; }
+}

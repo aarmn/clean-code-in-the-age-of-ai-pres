@@ -47,7 +47,7 @@ function isAi(slides: Route[], no: number): boolean {
       <span class="deck-foot-label">{{ label($nav.slides, $nav.currentSlideNo) }}</span>
       <span class="bar" />
       <span class="page">{{ String($nav.currentSlideNo).padStart(2, '0') }}</span>
-      <DotSphere class="deck-foot-sphere" :size="76" :detail="2" :dot-radius="0.55" :noise="0.06" :period="20" />
+      <DotSphere class="deck-foot-sphere" :size="76" :detail="2" :dot-radius="0.45" :period="40" />
     </div>
   </div>
 </template>
