@@ -19,6 +19,8 @@ const props = withDefaults(defineProps<{
   noise?: number
   /** A wave of light travelling across the edges. */
   pulse?: boolean
+  /** Colour family: violet (part one) or cyan (Age of AI). */
+  palette?: 'violet' | 'cyan'
 }>(), {
   size: 360,
   detail: 3,
@@ -26,6 +28,7 @@ const props = withDefaults(defineProps<{
   dotRadius: 1.1,
   noise: 0,
   pulse: true,
+  palette: 'violet',
 })
 
 const canvas = ref<HTMLCanvasElement>()
@@ -103,16 +106,17 @@ function wobble(x: number, y: number, z: number, s: number) {
     + 0.4 * Math.sin(4.1 * x + 3.7 * y + 0.6 * s)
 }
 
-// Palette: indigo (back) → violet → soft pink (front).
-const BACK = [88, 86, 214]
-const MIDC = [167, 139, 250]
-const FRONT = [233, 190, 255]
-const GLOW = [250, 205, 255]
+// Palettes: back → middle → front, plus the colour of the travelling glow.
+const PALETTES = {
+  violet: { back: [88, 86, 214], mid: [167, 139, 250], front: [233, 190, 255], glow: [250, 205, 255] },
+  cyan: { back: [14, 116, 144], mid: [34, 211, 238], front: [165, 243, 252], glow: [207, 250, 254] },
+}
 function mix(a: number[], b: number[], k: number) {
   return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k]
 }
 function shade(d: number) {
-  return d < 0.5 ? mix(BACK, MIDC, d * 2) : mix(MIDC, FRONT, (d - 0.5) * 2)
+  const p = PALETTES[props.palette]
+  return d < 0.5 ? mix(p.back, p.mid, d * 2) : mix(p.mid, p.front, (d - 0.5) * 2)
 }
 const rgba = (c: number[], a: number) => `rgba(${c[0] | 0},${c[1] | 0},${c[2] | 0},${a.toFixed(3)})`
 
@@ -208,7 +212,7 @@ function draw(time: number) {
     const d = (Math.floor(i / GLOW_BANDS) + 0.5) / DEPTH_BANDS
     const g = (i % GLOW_BANDS) / (GLOW_BANDS - 1)
     const base = 0.025 + d * d * 0.17
-    ctx.strokeStyle = rgba(mix(shade(d), GLOW, g * 0.7), base * (1 + g * 1.6))
+    ctx.strokeStyle = rgba(mix(shade(d), PALETTES[props.palette].glow, g * 0.7), base * (1 + g * 1.6))
     ctx.lineWidth = Math.max(0.3, (0.3 + d * 0.45) * lineScale * (1 + g * 0.35))
     ctx.beginPath()
     for (const [a, b] of band) {
@@ -261,7 +265,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="dot-sphere" :style="{ width: `${size}px`, height: `${size}px` }" aria-hidden="true">
+  <div class="dot-sphere" :class="palette" :style="{ width: `${size}px`, height: `${size}px` }" aria-hidden="true">
     <canvas ref="canvas" :style="{ width: `${size}px`, height: `${size}px` }" />
   </div>
 </template>
@@ -278,6 +282,9 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   background: radial-gradient(circle at 40% 36%, rgba(196, 167, 255, 0.16), rgba(139, 92, 246, 0.06) 50%, transparent 72%);
   filter: blur(26px);
+}
+.dot-sphere.cyan::before {
+  background: radial-gradient(circle at 40% 36%, rgba(103, 232, 249, 0.16), rgba(6, 182, 212, 0.06) 50%, transparent 72%);
 }
 canvas {
   position: relative;

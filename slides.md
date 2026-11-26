@@ -179,11 +179,12 @@ AGENTS.md       how people and agents work here
 <li><span>05</span>Structure: MVC, layers, GRASP</li>
 </ol></div>
 <div class="roadmap-group python"><b>PYTHON</b><ol>
-<li><span>06</span>The language and its standard library</li>
-<li><span>07</span>Tooling: Ruff, mypy, uv, pytest</li>
+<li><span>06</span>The language</li>
+<li><span>07</span>Features to learn</li>
+<li><span>08</span>Tooling: Ruff, mypy, uv, pytest</li>
 </ol></div>
 <div class="roadmap-group beyond"><b>BEYOND THE CODE</b><ol>
-<li><span>08</span>Contracts and observability</li>
+<li><span>09</span>Contracts and observability</li>
 </ol></div>
 </div>
 
@@ -365,7 +366,7 @@ def create_booking(request):
 </div>
 
 <!--
-2 min · 6–8 elapsed
+1.5 min · 6–7.5 elapsed
 
 **Before clicking:** Give the room 30 seconds. “What would you be afraid to change here?” Then read the red list.
 
@@ -544,7 +545,7 @@ class BookingService:
 </div>
 
 <!--
-2 min · 8–10 elapsed
+1.5 min · 7.5–9 elapsed
 
 **This is the heaviest change, so take it one concept at a time.** Each click adds exactly one idea: typed inputs, exceptions, a data class, behavior on the object that owns the data (OOP), and finally a service that receives its dependencies.
 
@@ -595,7 +596,7 @@ return full - full * self.percent_off // 100
 </ul>
 
 <!--
-0.5 min · 10–10.5 elapsed
+0.5 min · 9–9.5 elapsed
 
 Good code needs few comments unless it’s doing something genuinely complex. Class-level documentation and the formula behind a tricky calculation are worth writing down.
 -->
@@ -615,7 +616,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 10.5–11 elapsed
+0.5 min · 9.5–10 elapsed
 -->
 
 ---
@@ -639,7 +640,7 @@ chapter: Principles
 </ul>
 
 <!--
-0.5 min · 11–11.5 elapsed
+0.5 min · 10–10.5 elapsed
 -->
 
 ---
@@ -700,7 +701,7 @@ def validate(r: BookingRequest,
 </ScrollStage>
 
 <!--
-1 min · 11.5–12.5 elapsed
+1 min · 10.5–11.5 elapsed
 
 **Click:** the content slides up under the title to show the rest of the reasons.
 
@@ -754,7 +755,7 @@ total = total_cents(seats)
 </ul>
 
 <!--
-1 min · 12.5–13.5 elapsed
+1 min · 11.5–12.5 elapsed
 
 **Stress this one.** Most bugs in growing codebases are two copies of the same rule drifting apart. Ask: “if this rule changes, how many places do I edit?” The answer should be one.
 
@@ -770,7 +771,7 @@ class: one-note
 <p class="lead">Generalizing early, for cases that don’t exist and never will, is how a two-line rule grows into a framework. Which brings us to YAGNI.</p>
 
 <!--
-0.5 min · 13.5–14 elapsed
+0.5 min · 12.5–13 elapsed
 
 Premature generalization looks like DRY: “these might share logic one day.” It costs simplicity today for a future that rarely arrives.
 -->
@@ -817,7 +818,7 @@ SEAT_PRICE_CENTS = 3500
 </ul>
 
 <!--
-1 min · 14–15 elapsed
+1 min · 13–14 elapsed
 
 YAGNI and DRY work together: DRY keeps the future change small, so YAGNI lets you wait for it.
 -->
@@ -869,7 +870,7 @@ def create_booking(
 </ul>
 
 <!--
-1 min · 15–16 elapsed
+1 min · 14–15 elapsed
 
 A responsibility is a reason to change, not a line count. Split too eagerly and you get ten one-line classes: that’s where S fights KISS and YAGNI.
 -->
@@ -921,7 +922,7 @@ class PostgresBookingStore:   # new, no edits
 </ul>
 
 <!--
-1 min · 16–17 elapsed
+1 min · 15–16 elapsed
 -->
 
 ---
@@ -967,7 +968,7 @@ class CachedBookingStore(MemoryBookingStore):
 </ul>
 
 <!--
-1 min · 17–18 elapsed
+1 min · 16–17 elapsed
 -->
 
 ---
@@ -987,7 +988,7 @@ class CachedBookingStore(MemoryBookingStore):
 <p v-click><strong>No.</strong> The new ID isn’t cached, so <code>get</code> raises <code>KeyError</code>. An unexpected exception breaks the promise the service relies on: the behavior of P changed.</p>
 
 <!--
-0.5 min · 18–18.5 elapsed
+0.5 min · 17–17.5 elapsed
 
 Let the room answer the question before clicking. Then click for the answer.
 -->
@@ -1041,7 +1042,7 @@ seats_sold(FakeReader([Booking("A42", 2, 7000)]))
 </ul>
 
 <!--
-1 min · 18.5–19.5 elapsed
+1 min · 17.5–18.5 elapsed
 -->
 
 ---
@@ -1089,7 +1090,7 @@ test_service = BookingService(
 </ul>
 
 <!--
-1 min · 19.5–20.5 elapsed
+1 min · 18.5–19.5 elapsed
 -->
 
 ---
@@ -1104,7 +1105,7 @@ footer: false
 <p class="lead">Dependency Injection and Service Locator. Keep D in mind: we’ll meet both in the Design patterns chapter.</p>
 
 <!--
-0.5 min · 20.5–21 elapsed
+0.5 min · 19.5–20 elapsed
 
 Plant the idea now, pay it off later. D says what to depend on; the two patterns are how you wire it. When we reach them, point back to this slide.
 -->
@@ -1124,7 +1125,7 @@ Plant the idea now, pay it off later. D says what to depend on; the two patterns
 </div>
 
 <!--
-0.5 min · 21–21.5 elapsed
+0.5 min · 20–20.5 elapsed
 
 Same code, different questions. Adding the Postgres store is one change that has to pass all three.
 -->
@@ -1136,7 +1137,7 @@ class: one-note
 # Design principles, SOLID included, are <FuzzyWord>fuzzy</FuzzyWord>: good defaults you bend with judgment.
 
 <!--
-0.5 min · 21.5–22 elapsed
+0.5 min · 20.5–21 elapsed
 
 Explain in your own words: these are guidelines with a lot of interpretation, not laws. Apply them where they reduce the cost of change; bend them when they make the code harder to follow.
 -->
@@ -1157,7 +1158,7 @@ Explain in your own words: these are guidelines with a lot of interpretation, no
 <div class="statement">When two principles disagree, follow the one that protects the change you expect next.</div>
 
 <!--
-0.5 min · 22–22.5 elapsed
+0.5 min · 21–21.5 elapsed
 
 SOLID pulls toward more, smaller pieces; KISS and YAGNI pull toward fewer. The last row is the Liskov example from a few slides ago: inheritance chosen for reuse (DRY) is exactly what broke substitutability.
 -->
@@ -1177,7 +1178,7 @@ SOLID pulls toward more, smaller pieces; KISS and YAGNI pull toward fewer. The l
 <div class="statement">A substitute may ask for less and promise more, never the reverse. That’s exactly what Liskov asks it to preserve.</div>
 
 <!--
-0.5 min · 22.5–23 elapsed
+0.5 min · 21.5–22 elapsed
 
 Conceptual only. A protocol tells you which methods exist; a contract tells you what they mean. Writing the contract down is how you explain what a substitute has to keep.
 -->
@@ -1197,7 +1198,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 23–23.5 elapsed
+0.5 min · 22–22.5 elapsed
 -->
 
 ---
@@ -1223,7 +1224,7 @@ chapter: Code smells
 </ul>
 
 <!--
-0.5 min · 23.5–24 elapsed
+0.5 min · 22.5–23 elapsed
 -->
 
 ---
@@ -1273,7 +1274,7 @@ refund(BookingId("A42"), Money(cents=3500))
 </ul>
 
 <!--
-1 min · 24–25 elapsed
+1 min · 23–24 elapsed
 -->
 
 ---
@@ -1317,7 +1318,7 @@ total = (SEAT_PRICE * seats).percent_off(20) + BOOKING_FEE
 </div>
 
 <!--
-0.5 min · 25–25.5 elapsed
+0.5 min · 24–24.5 elapsed
 
 Compare the last line with `total -= total * 20 // 100`: the method name is the documentation. Python’s data model (`__add__`, `__mul__`, `__eq__`, `__lt__`) lets your own types behave like numbers where that makes sense.
 -->
@@ -1340,7 +1341,7 @@ Compare the last line with `total -= total * 20 // 100`: the method name is the 
 <div class="statement">Move up a step when the code asks for it, not before.</div>
 
 <!--
-0.5 min · 25.5–26 elapsed
+0.5 min · 24.5–25 elapsed
 
 This is the refactor from chapter one, seen as a rule: we started with a working, ugly function and grew it one concept at a time. Starting from an elaborate class hierarchy is how you end up with the rules engine from the KISS slide.
 -->
@@ -1388,7 +1389,7 @@ notifier.booking_created(booking)
 </ul>
 
 <!--
-1 min · 26–27 elapsed
+1 min · 25–26 elapsed
 -->
 
 ---
@@ -1437,7 +1438,7 @@ total = pricing.total_cents(seats)
 </ul>
 
 <!--
-1 min · 27–28 elapsed
+1 min · 26–27 elapsed
 -->
 
 ---
@@ -1487,7 +1488,7 @@ if booking.status is BookingStatus.CANCELLED: ...
 </ul>
 
 <!--
-1 min · 28–29 elapsed
+1 min · 27–28 elapsed
 -->
 
 ---
@@ -1538,7 +1539,7 @@ label("cancelled")               # mypy: wrong type
 </ul>
 
 <!--
-0.5 min · 29–29.5 elapsed
+0.5 min · 28–28.5 elapsed
 -->
 
 ---
@@ -1556,7 +1557,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 29.5–30 elapsed
+0.5 min · 28.5–29 elapsed
 -->
 
 ---
@@ -1583,7 +1584,7 @@ chapter: Design patterns
 </ul>
 
 <!--
-0.5 min · 30–30.5 elapsed
+0.5 min · 29–29.5 elapsed
 -->
 
 ---
@@ -1625,14 +1626,14 @@ service = BookingService(
 </div>
 
 <!--
-1 min · 30.5–31.5 elapsed
+1 min · 29.5–30.5 elapsed
 
 This is a factory function, not a reason to build factory classes. The settings value comes from the environment, so it still needs runtime validation: that’s the ValueError.
 -->
 
 ---
 
-<div class="kicker">DESIGN PATTERN · STRATEGY</div>
+<div class="kicker">DESIGN PATTERN · STRATEGY · INTERCHANGEABLE RULES BEHIND ONE INTERFACE</div>
 
 # Swap the pricing rule, keep the service
 
@@ -1671,7 +1672,7 @@ service = BookingService(store, pricing=EarlyBirdPricing())
 </div>
 
 <!--
-1 min · 31.5–32.5 elapsed
+1 min · 30.5–31.5 elapsed
 
 In Python a strategy can simply be a function, `Callable[[int], int]`; a class earns its place when the rule has settings, like the percentage here.
 -->
@@ -1716,7 +1717,7 @@ class StripePayments:
 </div>
 
 <!--
-1 min · 32.5–33.5 elapsed
+1 min · 31.5–32.5 elapsed
 
 An adapter translates at a boundary you don’t control. A `FakePayments` in tests appends to a list, so no network call and no test card is needed.
 -->
@@ -1758,7 +1759,7 @@ assert Settings() is Settings()        # the same object
 </div>
 
 <!--
-1 min · 33.5–34.5 elapsed
+0.5 min · 32.5–33 elapsed
 
 This is the Gang of Four singleton, enforced by the class itself. The metaclass version overrides `type.__call__` and keeps a dict of instances, so `__init__` runs once too. Then show the next slide: the Pythonic version doesn’t enforce anything, and that’s usually better.
 -->
@@ -1805,7 +1806,7 @@ def create_booking(
 </div>
 
 <!--
-1 min · 34.5–35.5 elapsed
+1 min · 33–34 elapsed
 
 Strictly, this isn’t a singleton: `Settings()` still makes a second object. It’s one instance by convention, because everyone goes through `get_settings()`. Python modules are singletons too, which is why a module-level object is the other common answer. Keep singletons for read-only things like settings or a client.
 -->
@@ -1848,7 +1849,7 @@ def create_booking(
 </div>
 
 <!--
-1 min · 35.5–36.5 elapsed
+1 min · 34–35 elapsed
 
 **Answer to “is dependency inversion just dependency injection?”** No, but they travel together. DIP is a design property; DI is the most common way to get it in Python.
 -->
@@ -1902,7 +1903,7 @@ service = BookingService()   # no store in sight
 </ul>
 
 <!--
-0.5 min · 36.5–37 elapsed
+0.5 min · 35–35.5 elapsed
 
 **Ask:** “Who chooses the concrete store, and who asks for it?” In both versions, application setup chooses the implementation (Postgres). The difference is whether setup hands the store to the service, or the service pulls it from a registry at runtime.
 
@@ -1924,7 +1925,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 37–37.5 elapsed
+0.5 min · 35.5–36 elapsed
 -->
 
 ---
@@ -1950,7 +1951,7 @@ chapter: Structure
 </ul>
 
 <!--
-0.5 min · 37.5–38 elapsed
+0.5 min · 36–36.5 elapsed
 
 “Model” in this chapter means your domain model, not a machine-learning model.
 -->
@@ -1995,7 +1996,7 @@ def create_booking(req: BookingRequest) -> BookingResponse:
 </div>
 
 <!--
-1 min · 38–39 elapsed
+1 min · 36.5–37.5 elapsed
 
 Our API already is MVC; we just hadn’t named it.
 -->
@@ -2015,7 +2016,7 @@ Our API already is MVC; we just hadn’t named it.
 <div class="statement">Each layer only calls the one below it. Also known as three-tier, or n-tier, architecture.</div>
 
 <!--
-1 min · 39–40 elapsed
+0.5 min · 37.5–38 elapsed
 
 Strictly, “layers” are a logical split and “tiers” are where code runs (browser, server, database), but people use the words interchangeably. Our booking API already has all three: we built them during the refactor.
 -->
@@ -2035,7 +2036,7 @@ Strictly, “layers” are a logical split and “tiers” are where code runs (
 <div class="statement">A rule in the client is a suggestion. A rule on the server is a rule.</div>
 
 <!--
-0.5 min · 40–40.5 elapsed
+0.5 min · 38–38.5 elapsed
 
 The presentation layer can run in a browser or a phone, but the business logic layer stays on the server. The price shown in the app is a preview; the server computes the one that gets charged.
 -->
@@ -2068,6 +2069,7 @@ class BookingService:              # Controller: handles the
 
 </div>
 <div>
+<p class="muted" style="font-size: 14px; margin: 0 0 12px">Nine guidelines for deciding which object gets which job.</p>
 <span class="label">Four of the nine</span>
 <ul class="check-list plain">
 <li><strong>Information Expert:</strong> the object with the data does the work.</li>
@@ -2079,7 +2081,7 @@ class BookingService:              # Controller: handles the
 </div>
 
 <!--
-1 min · 40.5–41.5 elapsed
+1 min · 38.5–39.5 elapsed
 
 GRASP isn’t an architecture like MVC; it’s a checklist for assigning responsibilities.
 -->
@@ -2099,7 +2101,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 41.5–42 elapsed
+0.5 min · 39.5–40 elapsed
 
 That closes the language-independent concepts. From here on it’s Python.
 -->
@@ -2121,13 +2123,12 @@ chapter: Python
 
 <ul class="check-list plain">
 <li>The PEPs and the Zen of Python</li>
-<li>Dataclasses, docstrings and logging</li>
-<li>Built-ins and the standard library</li>
+<li>Dataclasses, Pydantic, docstrings and logging</li>
 <li>Protocols, and choosing a Python version</li>
 </ul>
 
 <!--
-0.5 min · 42–42.5 elapsed
+0.5 min · 40–40.5 elapsed
 -->
 
 ---
@@ -2144,7 +2145,7 @@ chapter: Python
 </div>
 
 <!--
-0.5 min · 42.5–43 elapsed
+0.5 min · 40.5–41 elapsed
 -->
 
 ---
@@ -2213,7 +2214,7 @@ clicks: 1
 </ScrollStage>
 
 <!--
-1 min · 43–44 elapsed
+0.5 min · 41–41.5 elapsed
 
 Point back at what we’ve done: “Readability counts” was chapter one, “Simple is better than complex” was KISS, “Errors should never pass silently” was step 6 of the refactor.
 -->
@@ -2263,7 +2264,7 @@ class Booking:
 </div>
 
 <!--
-0.5 min · 44–44.5 elapsed
+0.5 min · 41.5–42 elapsed
 
 A dataclass doesn’t validate input: Pydantic does that at the API boundary. StrEnum is 3.11+, slots=True is 3.10+.
 -->
@@ -2312,7 +2313,7 @@ BookingRequest(booking_id="A42", seats=0)
 </ul>
 
 <!--
-1 min · 44.5–45.5 elapsed
+0.5 min · 42–42.5 elapsed
 
 The string "2" becomes the int 2 because Pydantic coerces compatible input by default; strict mode turns that off.
 -->
@@ -2364,9 +2365,117 @@ total_cents(self, seats: int) -> int
 </div>
 
 <!--
-1 min · 45.5–46.5 elapsed
+0.5 min · 42.5–43 elapsed
 
 This is the class-level documentation from the comments slide: the place where a formula or a rounding rule belongs.
+-->
+
+---
+
+<div class="kicker">PYTHON · DOCSTRING STYLES</div>
+
+# Three common docstring styles
+
+<div class="compare three">
+<div>
+<span class="label">Google</span>
+
+```text
+"""Return the total in cents.
+
+Args:
+    seats: At least 1.
+
+Returns:
+    Total price in cents.
+
+Raises:
+    InvalidSeatCount: If seats < 1.
+"""
+```
+
+</div>
+<div>
+<span class="label">NumPy</span>
+
+```text
+"""Return the total in cents.
+
+Parameters
+----------
+seats : int
+    At least 1.
+
+Returns
+-------
+int
+    Total price in cents.
+"""
+```
+
+</div>
+<div>
+<span class="label">reStructuredText (Sphinx)</span>
+
+```text
+"""Return the total in cents.
+
+:param seats: At least 1.
+:returns: Total price in cents.
+:raises InvalidSeatCount: seats < 1.
+"""
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li>PEP 257 sets the conventions: a one-line summary, a blank line, then details. PEP 287 proposes reStructuredText as the markup.</li>
+<li>Google and NumPy read well as plain text, and doc tools understand all three. Pick one per project; Ruff’s <code>D</code> rules can enforce it.</li>
+</ul>
+
+<!--
+0.5 min · 43–43.5 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON · DOCS FROM DOCSTRINGS</div>
+
+# From docstrings to an HTML site
+
+<div class="code-notes">
+<div>
+
+```bash
+# Quickest: an API reference in one command
+uv run pdoc booking -o docs/
+
+# Sphinx: the standard (docs.python.org uses it)
+uv run sphinx-quickstart docs
+#   conf.py: extensions = ["sphinx.ext.autodoc",
+#                          "sphinx.ext.napoleon"]
+uv run sphinx-build -b html docs docs/_build/html
+
+# MkDocs + mkdocstrings: Markdown pages + docstrings
+uv run mkdocs build
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li><strong>pdoc:</strong> zero configuration; reads type hints and docstrings.</li>
+<li><strong>Sphinx:</strong> <code>autodoc</code> pulls docstrings in; <code>napoleon</code> understands Google and NumPy style.</li>
+<li><strong>MkDocs:</strong> Markdown-first sites; mkdocstrings renders the API pages.</li>
+<li>Publish on GitHub Pages or Read the Docs.</li>
+</ul>
+</div>
+</div>
+
+<!--
+0.5 min · 43.5–44 elapsed
+
+Each tool is a dev dependency: `uv add --dev pdoc` (or sphinx, or mkdocs mkdocstrings[python]). Run the build in CI so the docs never go stale.
 -->
 
 ---
@@ -2408,204 +2517,7 @@ logging.basicConfig(
 </div>
 
 <!--
-1 min · 46.5–47.5 elapsed
--->
-
----
-
-<div class="kicker">PYTHON · BUILT-INS</div>
-
-# enumerate and zip: loop over things, not indexes
-
-<div class="compare">
-<div>
-<span class="label bad">✕ Index arithmetic</span>
-
-```python
-for i in range(len(bookings)):
-    print(i + 1, bookings[i].booking_id)
-
-for i in range(len(seats)):
-    assign(seats[i], guests[i])
-```
-
-</div>
-<div>
-<span class="label good">✓ Loop over the things</span>
-
-```python
-for row, booking in enumerate(bookings, start=1):
-    print(row, booking.booking_id)
-
-for seat, guest in zip(seats, guests, strict=True):
-    assign(seat, guest)
-```
-
-</div>
-</div>
-
-<ul class="check-list plain why">
-<li>No index arithmetic, so no off-by-one errors and no <code>IndexError</code>.</li>
-<li><code>start=1</code> gives human row numbers directly.</li>
-<li><code>strict=True</code> (3.10+) raises if the lists differ in length, instead of silently dropping guests.</li>
-</ul>
-
-<!--
-0.5 min · 47.5–48 elapsed
--->
-
----
-
-<div class="kicker">PYTHON · STANDARD LIBRARY</div>
-
-# Counter: counting is a solved problem
-
-<div class="compare">
-<div>
-<span class="label bad">✕ Counting by hand</span>
-
-```python
-counts = {}
-for b in bookings:
-    if b.booking_id not in counts:
-        counts[b.booking_id] = 0
-    counts[b.booking_id] += 1
-duplicates = [k for k, n in counts.items() if n > 1]
-```
-
-</div>
-<div>
-<span class="label good">✓ collections.Counter</span>
-
-```python
-from collections import Counter
-
-counts = Counter(b.booking_id for b in bookings)
-duplicates = [k for k, n in counts.items() if n > 1]
-top_three = counts.most_common(3)
-```
-
-</div>
-</div>
-
-<ul class="check-list plain why">
-<li><code>Counter</code> is a dict that counts: missing keys read as 0, so there’s no setup code.</li>
-<li><code>most_common()</code> answers “which IDs repeat most?” in one call.</li>
-<li>The rest of <code>collections</code> is worth a look too: <code>defaultdict</code>, <code>deque</code>, <code>namedtuple</code>.</li>
-</ul>
-
-<!--
-0.5 min · 48–48.5 elapsed
--->
-
----
-
-<div class="kicker">PYTHON · STANDARD LIBRARY</div>
-
-# pathlib: paths are objects, not strings
-
-<div class="compare">
-<div>
-<span class="label bad">✕ String juggling</span>
-
-```python
-import os
-
-base = os.path.dirname(__file__)
-path = os.path.join(base, "data", "seats.json")
-if os.path.exists(path):
-    with open(path) as f:
-        data = f.read()
-```
-
-</div>
-<div>
-<span class="label good">✓ pathlib.Path</span>
-
-```python
-from pathlib import Path
-
-path = Path(__file__).parent / "data" / "seats.json"
-if path.exists():
-    data = path.read_text()
-```
-
-</div>
-</div>
-
-<ul class="check-list plain why">
-<li><code>/</code> joins paths correctly on Windows, macOS and Linux.</li>
-<li>Reading, writing, listing and checking files are methods on the path itself.</li>
-<li>Type hints get clearer too: <code>def load(path: Path)</code> says exactly what it expects.</li>
-</ul>
-
-<!--
-0.5 min · 48.5–49 elapsed
--->
-
----
-
-<div class="kicker">PYTHON · BUILT-INS</div>
-
-# sum, any, all: say what you compute
-
-<div class="compare">
-<div>
-<span class="label bad">✕ Loops with flags</span>
-
-```python
-total = 0
-for b in bookings:
-    total += b.seats
-
-has_group = False
-for b in bookings:
-    if b.seats > 10:
-        has_group = True
-        break
-```
-
-</div>
-<div>
-<span class="label good">✓ The intent is the function name</span>
-
-```python
-total = sum(b.seats for b in bookings)
-
-has_group = any(b.seats > 10 for b in bookings)
-
-all_valid = all(b.seats >= 1 for b in bookings)
-```
-
-</div>
-</div>
-
-<ul class="check-list plain why">
-<li>The function name states the intent: sum, any, all.</li>
-<li>Generator expressions (no square brackets) don’t build a temporary list.</li>
-<li><code>any</code> and <code>all</code> stop at the first answer, just like the hand-written <code>break</code>.</li>
-</ul>
-
-<!--
-0.5 min · 49–49.5 elapsed
--->
-
----
-
-<div class="kicker">PYTHON · STANDARD LIBRARY</div>
-
-# Five more small tools worth knowing
-
-<div class="rows wide">
-<div><b>f"{seats=}"</b><span><strong>Self-describing debug prints.</strong> Prints <code>seats=2</code>, so you never mix up which value is which.</span></div>
-<div><b>functools.cache</b><span><strong>Remember results.</strong> Calls a function once per argument set; we used it for <code>get_settings()</code>.</span></div>
-<div><b>itertools.batched</b><span><strong>Work in chunks.</strong> Send booking emails 50 at a time without index math (3.12+).</span></div>
-<div><b>contextlib.suppress</b><span><strong>Ignore one expected error.</strong> Clearer than a <code>try</code> with an empty <code>except</code>.</span></div>
-<div><b>dataclasses.replace</b><span><strong>Change a frozen object safely.</strong> <code>replace(booking, status=CANCELLED)</code> returns an updated copy.</span></div>
-</div>
-
-<!--
-0.5 min · 49.5–50 elapsed
+0.5 min · 44–44.5 elapsed
 -->
 
 ---
@@ -2651,25 +2563,7 @@ seats = list(range(10))  # still the built-in
 </ul>
 
 <!--
-0.5 min · 50–50.5 elapsed
--->
-
----
-class: advice
----
-
-<div class="kicker">ADVICE · THE NEXT STEP AFTER SYNTAX</div>
-
-# Learn your language’s standard library
-
-<div class="advice-points">
-<div><b>CHECK FIRST</b>Before <code>pip install</code>, check whether Python already ships it.</div>
-<div><b>READ THE MENU</b>Skim <code>docs.python.org/3/library</code> once. You’ll remember where things are.</div>
-<div><b>START WITH THESE</b><code>dataclasses</code> <code>enum</code> <code>collections</code> <code>itertools</code> <code>functools</code> <code>pathlib</code> <code>logging</code> <code>typing</code></div>
-</div>
-
-<!--
-0.5 min · 50.5–51 elapsed
+0.5 min · 44.5–45 elapsed
 -->
 
 ---
@@ -2756,7 +2650,7 @@ service = BookingService(store=memory_store)
 </div>
 
 <!--
-1 min · 51–52 elapsed
+1 min · 45–46 elapsed
 
 Teach this through questions. Ask each one and wait for predictions before clicking.
 
@@ -2847,7 +2741,7 @@ postgres.create(booking)  # self.store.save -> Postgres...save
 </div>
 
 <!--
-1 min · 52–53 elapsed
+1 min · 46–47 elapsed
 
 **Q4 (before clicking):** “Which save runs for each call?” Let them trace `memory.create(booking)` and `postgres.create(booking)` to `self.store.save(booking)`. **Click:** the trace comments.
 
@@ -2883,7 +2777,7 @@ if (booking := find(index, "A42")) is None:                         # 3.8 · PEP
 </ul>
 
 <!--
-0.5 min · 53–53.5 elapsed
+0.5 min · 47–47.5 elapsed
 -->
 
 ---
@@ -2901,6 +2795,454 @@ class: advice
 </div>
 
 <!--
+0.5 min · 47.5–48 elapsed
+-->
+
+---
+class: chapter
+chapter: Features to learn
+---
+
+<div class="kicker">PART 01 · PYTHON</div>
+
+<div class="chapter-head"><span class="chapter-num">07</span>
+
+# Python features to learn
+
+</div>
+
+<p class="lead">A quick tour. Each one is worth an evening of practice; the links are on the resources pages.</p>
+
+<ul class="check-list plain">
+<li>Built-ins: enumerate, zip, sum, any, all, map, and Counter</li>
+<li>f-strings, functools.lru_cache, copy and deepcopy</li>
+<li>pickle, decorators and type hints</li>
+</ul>
+
+<!--
+0.5 min · 48–48.5 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON · BUILT-INS</div>
+
+# enumerate and zip: loop over things, not indexes
+
+<div class="compare">
+<div>
+<span class="label bad">✕ Index arithmetic</span>
+
+```python
+for i in range(len(bookings)):
+    print(i + 1, bookings[i].booking_id)
+
+for i in range(len(seats)):
+    assign(seats[i], guests[i])
+```
+
+</div>
+<div>
+<span class="label good">✓ Loop over the things</span>
+
+```python
+for row, booking in enumerate(bookings, start=1):
+    print(row, booking.booking_id)
+
+for seat, guest in zip(seats, guests, strict=True):
+    assign(seat, guest)
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li>No index arithmetic, so no off-by-one errors and no <code>IndexError</code>.</li>
+<li><code>start=1</code> gives human row numbers directly.</li>
+<li><code>strict=True</code> (3.10+) raises if the lists differ in length, instead of silently dropping guests.</li>
+</ul>
+
+<!--
+0.5 min · 48.5–49 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON · STANDARD LIBRARY</div>
+
+# Counter: counting is a solved problem
+
+<div class="compare">
+<div>
+<span class="label bad">✕ Counting by hand</span>
+
+```python
+counts = {}
+for b in bookings:
+    if b.booking_id not in counts:
+        counts[b.booking_id] = 0
+    counts[b.booking_id] += 1
+duplicates = [k for k, n in counts.items() if n > 1]
+```
+
+</div>
+<div>
+<span class="label good">✓ collections.Counter</span>
+
+```python
+from collections import Counter
+
+counts = Counter(b.booking_id for b in bookings)
+duplicates = [k for k, n in counts.items() if n > 1]
+top_three = counts.most_common(3)
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li><code>Counter</code> is a dict that counts: missing keys read as 0, so there’s no setup code.</li>
+<li><code>most_common()</code> answers “which IDs repeat most?” in one call.</li>
+<li>The rest of <code>collections</code> is worth a look too: <code>defaultdict</code>, <code>deque</code>, <code>namedtuple</code>.</li>
+</ul>
+
+<!--
+0.5 min · 49–49.5 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON · BUILT-INS</div>
+
+# sum, any, all: say what you compute
+
+<div class="compare">
+<div>
+<span class="label bad">✕ Loops with flags</span>
+
+```python
+total = 0
+for b in bookings:
+    total += b.seats
+
+has_group = False
+for b in bookings:
+    if b.seats > 10:
+        has_group = True
+        break
+```
+
+</div>
+<div>
+<span class="label good">✓ The intent is the function name</span>
+
+```python
+total = sum(b.seats for b in bookings)
+
+has_group = any(b.seats > 10 for b in bookings)
+
+all_valid = all(b.seats >= 1 for b in bookings)
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li>The function name states the intent: sum, any, all.</li>
+<li>Generator expressions (no square brackets) don’t build a temporary list.</li>
+<li><code>any</code> and <code>all</code> stop at the first answer, just like the hand-written <code>break</code>.</li>
+</ul>
+
+<!--
+0.5 min · 49.5–50 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · MAP</div>
+
+# map: apply a function to every item
+
+<div class="compare">
+<div>
+<span class="label good">map</span>
+
+```python
+names = list(map(str.title, raw_names))
+totals = list(map(pricing.total_cents, seat_counts))
+```
+
+</div>
+<div>
+<span class="label good">A comprehension</span>
+
+```python
+names = [n.title() for n in raw_names]
+totals = [pricing.total_cents(n) for n in seat_counts]
+groups = [n for n in seat_counts if n > 10]
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li><code>map(f, items)</code> applies a function to every item, lazily: it returns an iterator, so wrap it in <code>list()</code> to see the values.</li>
+<li>A comprehension does the same and can also filter; most Python code prefers it.</li>
+<li><code>map</code> shines when you already have a named function. <code>filter</code> and <code>functools.reduce</code> are its siblings.</li>
+</ul>
+
+<!--
+0.5 min · 50–50.5 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · F-STRINGS</div>
+
+# f-strings: much more than string interpolation
+
+<div class="code-notes">
+<div>
+
+```python
+seats, total = 2, 5600
+
+f"{seats=}"                   # 'seats=2'
+f"{total / 100:.2f}"          # '56.00'
+f"{total:,}"                  # '5,600'
+f"{'A42':>8}"                 # '     A42'
+f"{seats:03d}"                # '002'
+f"{when:%Y-%m-%d %H:%M}"      # '2026-11-26 18:30'
+f"{booking!r}"                # repr() instead of str()
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li>After the colon comes the format spec: width, alignment, precision, thousands separators, dates.</li>
+<li><code>=</code> (3.8+) prints the expression and its value: perfect for debugging.</li>
+<li><code>!r</code> uses <code>repr()</code>, handy in logs.</li>
+<li>Many more tricks: <a href="https://fstring.help/cheat/">fstring.help</a>.</li>
+</ul>
+</div>
+</div>
+
+<!--
+0.5 min · 50.5–51 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · FUNCTOOLS</div>
+
+# lru_cache: remember expensive results
+
+<div class="code-notes">
+<div>
+
+```python
+from functools import cache, lru_cache
+
+@lru_cache(maxsize=256)
+def seat_map(venue_id: str) -> SeatMap:
+    return load_seat_map(venue_id)    # slow: reads a file
+
+seat_map("hall-a")      # loads it
+seat_map("hall-a")      # instant: cached
+seat_map.cache_info()   # CacheInfo(hits=1, misses=1, ...)
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li>Remembers results per argument; arguments must be hashable.</li>
+<li><code>maxsize</code> bounds memory: the least recently used entries go first.</li>
+<li><code>@cache</code> is the unbounded version; we used it for <code>get_settings()</code>.</li>
+<li>Only for pure functions. Tests can call <code>cache_clear()</code>.</li>
+</ul>
+</div>
+</div>
+
+<!--
+0.5 min · 51–51.5 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · COPY</div>
+
+# copy and deepcopy: what “a copy” really means
+
+<div class="code-notes">
+<div>
+
+```python
+import copy
+
+order = {"booking_id": "A42", "seats": [12, 13]}
+alias = order               # no copy: one object, two names
+
+shallow = copy.copy(order)
+shallow["seats"].append(14)
+order["seats"]              # [12, 13, 14]: the list is shared!
+
+deep = copy.deepcopy(order)
+deep["seats"].append(15)
+order["seats"]              # [12, 13, 14]: untouched
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li><code>=</code> never copies anything.</li>
+<li><code>copy.copy</code> copies the outer object; inner lists and dicts are shared.</li>
+<li><code>copy.deepcopy</code> copies everything, recursively, and is slower.</li>
+<li>Frozen dataclasses and <code>dataclasses.replace()</code> avoid most of the need.</li>
+</ul>
+</div>
+</div>
+
+<!--
+0.5 min · 51.5–52 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · PICKLE AND MARSHALLING</div>
+
+# pickle: Python objects to bytes and back
+
+<div class="code-notes">
+<div>
+
+```python
+import pickle
+
+data = pickle.dumps(booking)    # Booking -> bytes
+same = pickle.loads(data)       # bytes -> Booking
+assert same == booking
+
+with open("bookings.pkl", "wb") as f:
+    pickle.dump(bookings, f)
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li>Serializes almost any Python object; <code>multiprocessing</code> uses it to pass objects between processes.</li>
+<li><strong>Never unpickle untrusted data</strong>: loading it can run arbitrary code.</li>
+<li>Python-only and version-sensitive. For files and APIs, prefer JSON (Pydantic’s <code>model_dump_json()</code>).</li>
+<li>“Marshalling” is the general name. Python’s <code>marshal</code> module is the internal <code>.pyc</code> format, not for your data.</li>
+</ul>
+</div>
+</div>
+
+<!--
+0.5 min · 52–52.5 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · DECORATORS</div>
+
+# Decorators: wrap a function without touching it
+
+<div class="code-notes wide tiny">
+<div>
+
+```python
+import functools
+import time
+
+def timed(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        try:
+            return func(*args, **kwargs)
+        finally:
+            ms = (time.perf_counter() - start) * 1000
+            logger.info("%s took %.1f ms", func.__name__, ms)
+    return wrapper
+
+@timed
+def create_booking(booking_id: str, seats: int) -> Booking: ...
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li>A decorator takes a function and returns a new one: <code>@timed</code> means <code>create_booking = timed(create_booking)</code>.</li>
+<li><code>functools.wraps</code> keeps the original name and docstring.</li>
+<li>You’ve seen them all day: <code>@dataclass</code>, <code>@cache</code>, <code>@property</code>, <code>@app.post</code>.</li>
+</ul>
+</div>
+</div>
+
+<!--
+0.5 min · 52.5–53 elapsed
+
+For a fully typed decorator, look up `ParamSpec`: it keeps the wrapped function’s parameter types.
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · TYPING</div>
+
+# Typing: the vocabulary of type hints
+
+<div class="compare">
+<div>
+<span class="label">Before 3.9 and 3.10: the typing module</span>
+
+```python
+from typing import Dict, List, Optional, Union
+
+def find(ids: List[str]) -> Optional[str]: ...
+Amount = Union[int, float]
+Index = Dict[str, Booking]
+```
+
+</div>
+<div>
+<span class="label good">Today</span>
+
+```python
+def find(ids: list[str]) -> str | None: ...
+Amount = int | float            # "or": a union
+Index = dict[str, Booking]
+Status = Literal["active", "cancelled"]
+def first[T](items: list[T]) -> T: ...  # 3.12
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li><code>List</code> and <code>list</code> are the same type; the capitalised aliases are deprecated since 3.9 (PEP 585).</li>
+<li><code>X | Y</code> means “or” (PEP 604). There’s no “and” (intersection) type: combine requirements with a Protocol.</li>
+<li>Worth learning next: <code>Literal</code>, <code>TypedDict</code>, <code>Protocol</code>, generics, and <code>Any</code> vs <code>object</code>.</li>
+</ul>
+
+<!--
+0.5 min · 53–53.5 elapsed
+-->
+
+---
+class: advice
+---
+
+<div class="kicker">ADVICE · THE NEXT STEP AFTER SYNTAX</div>
+
+# Learn your language’s standard library
+
+<div class="advice-points">
+<div><b>CHECK FIRST</b>Before <code>pip install</code>, check whether Python already ships it.</div>
+<div><b>READ THE MENU</b>Skim <code>docs.python.org/3/library</code> once. You’ll remember where things are.</div>
+<div><b>START WITH THESE</b><code>dataclasses</code> <code>enum</code> <code>collections</code> <code>itertools</code> <code>functools</code> <code>pathlib</code> <code>logging</code> <code>typing</code></div>
+</div>
+
+<!--
 0.5 min · 53.5–54 elapsed
 -->
 
@@ -2911,7 +3253,7 @@ chapter: Tooling
 
 <div class="kicker">PART 01 · PYTHON</div>
 
-<div class="chapter-head"><span class="chapter-num">07</span>
+<div class="chapter-head"><span class="chapter-num">08</span>
 
 # Tooling
 
@@ -3040,7 +3382,7 @@ chapter: Beyond the code
 
 <div class="kicker">PART 01 · BEYOND THE CODE</div>
 
-<div class="chapter-head"><span class="chapter-num">08</span>
+<div class="chapter-head"><span class="chapter-num">09</span>
 
 # Contracts and observability
 
@@ -3172,6 +3514,8 @@ class: advice
 
 <div class="statement">Small, named, tested rules: exactly what we can hand to an agent.</div>
 
+<Link to="resources" class="skip-link">Short on time? Skip to the resources →</Link>
+
 <!--
 0.5 min · 59.5–60 elapsed
 
@@ -3190,6 +3534,8 @@ part: ai
 # Clean Code:<br><em>Age of AI</em>
 
 <div class="deck-subtitle">Agents write the first draft. You still own the change.</div>
+
+<Link to="resources" class="skip-link">Short on time? Skip to the resources →</Link>
 
 <!--
 0.5 min · 60–60.5 elapsed
@@ -3743,23 +4089,41 @@ Close on the booking API: the same names, checks and tests made it easy for peop
 
 ---
 chapter: Resources
+routeAlias: resources
 ---
 
-<div class="kicker">KEEP GOING</div>
+<div class="kicker">KEEP GOING · WATCH</div>
 
-# Watch, read, practice
+# Watch
 
 <div class="rows wide">
 <div><b><a href="https://www.youtube.com/@mCoding">mCoding</a></b><span><strong>Python, explained precisely.</strong> How the language really works, and common mistakes.</span></div>
 <div><b><a href="https://www.youtube.com/@ArjanCodes">ArjanCodes</a></b><span><strong>Software design in Python.</strong> SOLID, patterns and refactoring on realistic code.</span></div>
 <div><b><a href="https://www.youtube.com/@CodeAesthetic">CodeAesthetic</a></b><span><strong>Clean code, beautifully animated.</strong> Naming, nesting, abstraction, comments.</span></div>
 <div><b><a href="https://www.youtube.com/watch?v=wf-BqAjZb8M">Beyond PEP 8</a></b><span><strong>Raymond Hettinger, PyCon 2015.</strong> The classic talk on readable Python.</span></div>
+</div>
+
+<!--
+0.5 min · 87.5–88 elapsed
+-->
+
+---
+
+<div class="kicker">KEEP GOING · READ AND PRACTICE</div>
+
+# Read, then practice
+
+<div class="rows wide">
+<div><b><a href="https://docs.python.org/3/library/">Your stdlib</a></b><span><strong>Learn about your standard library.</strong> Skim the index once; you’ll know where things live.</span></div>
+<div><b><a href="https://realpython.com/">Real Python</a></b><span><strong>Tutorials on almost every Python topic,</strong> from f-strings to packaging.</span></div>
+<div><b><a href="https://medium.com/tag/python">Medium</a></b><span><strong>Engineering blogs and write-ups.</strong> Quality varies: check the date and the author.</span></div>
+<div><b><a href="https://fstring.help/cheat/">fstring.help</a></b><span><strong>The f-string cheat sheet.</strong> Every format trick on one page.</span></div>
 <div><b><a href="https://spinroot.com/gerard/pdf/P10.pdf">NASA’s Power of 10</a></b><span><strong>Rules for safety-critical code.</strong> Simple control flow, bounded loops, checked returns.</span></div>
 <div><b>Your English</b><span><strong>A general tip.</strong> Names, docs, reviews and prompts to agents are all English. Clearer English means clearer code, and better answers from models.</span></div>
 </div>
 
 <!--
-1 min · 87.5–88.5 elapsed
+0.5 min · 88–88.5 elapsed
 
 The English tip matters more every year: most documentation is in English, and an agent can only do what your task description actually says.
 -->
@@ -3774,10 +4138,6 @@ The English tip matters more every year: most documentation is in English, and a
 # Six books worth your next year
 
 </div>
-<div class="res-qrs">
-  <div class="res-qr"><QrCode url="https://clean-code-in-the-age-of-ai-pres.vercel.app" :size="70" /><span>These slides</span></div>
-  <div class="res-qr"><QrCode url="https://aarmn.com" :size="70" /><span>aarmn.com</span></div>
-</div>
 </div>
 
 <div class="books">
@@ -3790,7 +4150,29 @@ The English tip matters more every year: most documentation is in English, and a
 </div>
 
 <!--
-1.5 min · 88.5–90 elapsed
+1 min · 88.5–89.5 elapsed
 
-Classic design (Clean Code, Refactoring, A Philosophy of Software Design), Python in depth (Fluent Python, Architecture Patterns with Python, free to read online), and building with models (AI Engineering). The left QR code opens these slides online; the right one opens aarmn.com.
+Classic design (Clean Code, Refactoring, A Philosophy of Software Design), Python in depth (Fluent Python, Architecture Patterns with Python, free to read online), and building with models (AI Engineering). The QR codes are on the last slide.
+-->
+
+---
+class: finish
+---
+
+<div class="kicker">THE END</div>
+
+# Thanks for<br><em>listening!</em>
+
+<div class="thanks-row">
+<div class="deck-subtitle">Questions? The slides, the workshop code and the links are all online.</div>
+<div class="res-qrs">
+  <div class="res-qr"><QrCode url="https://clean-code-in-the-age-of-ai-pres.vercel.app" :size="84" /><span>These slides</span></div>
+  <div class="res-qr"><QrCode url="https://aarmn.com" :size="84" /><span>aarmn.com</span></div>
+</div>
+</div>
+
+<!--
+0.5 min · 89.5–90 elapsed
+
+Open the floor for questions. The left QR code opens these slides; the right one opens aarmn.com.
 -->

@@ -415,3 +415,21 @@
 .foreshadow .kicker { justify-content: center; color: #6b4e00; }
 .foreshadow h1 { color: #1f1500; font-size: 50px; line-height: 1.1; max-width: 820px; margin: 0; }
 .foreshadow .lead { margin: 20px auto 0; max-width: 680px; color: #3d2c00; }
+
+/* ── Three-way comparison (docstring styles) ────────────────────────── */
+.compare.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.compare.three .slidev-code { font-size: 11px !important; line-height: 1.42 !important; }
+.compare.three pre.slidev-code { padding: 10px 12px !important; }
+.compare.three > div pre { border-color: var(--line-strong) !important; }
+
+/* ── "Skip to the resources" jump, top-right of a slide ─────────────── */
+.slidev-layout a.skip-link {
+  position: absolute; top: 28px; right: 58px; z-index: 2;
+  padding: 6px 12px; border: 1px solid var(--line-strong) !important; border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.08); color: var(--muted);
+  font: 11px var(--mono); letter-spacing: .08em;
+}
+.slidev-layout a.skip-link:hover { color: var(--paper); border-color: var(--accent) !important; }
+
+/* ── Thanks slide ───────────────────────────────────────────────────── */
+.thanks-row { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-top: 8px; }
