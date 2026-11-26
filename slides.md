@@ -2081,7 +2081,7 @@ class BookingService:              # Controller: handles the
 </div>
 
 <!--
-1 min · 37.5–38.5 elapsed
+0.5 min · 37.5–38 elapsed
 
 GRASP isn’t an architecture like MVC; it’s a checklist for assigning responsibilities.
 -->
@@ -2111,7 +2111,7 @@ clicks: 1
 </ScrollStage>
 
 <!--
-0.5 min · 38.5–39 elapsed
+0.5 min · 38–38.5 elapsed
 
 **Click** to slide down to the last ones. Several of these are old friends under new names: Polymorphism is Strategy, Indirection is Adapter, Protected Variations is the open/closed principle.
 -->
@@ -2131,7 +2131,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 39–39.5 elapsed
+0.5 min · 38.5–39 elapsed
 
 That closes the language-independent concepts. From here on it’s Python.
 -->
@@ -2158,7 +2158,7 @@ chapter: Python
 </ul>
 
 <!--
-0.5 min · 39.5–40 elapsed
+0.5 min · 39–39.5 elapsed
 -->
 
 ---
@@ -2175,7 +2175,7 @@ chapter: Python
 </div>
 
 <!--
-0.5 min · 40–40.5 elapsed
+0.5 min · 39.5–40 elapsed
 -->
 
 ---
@@ -2244,7 +2244,7 @@ clicks: 1
 </ScrollStage>
 
 <!--
-0.5 min · 40.5–41 elapsed
+0.5 min · 40–40.5 elapsed
 
 Point back at what we’ve done: “Readability counts” was chapter one, “Simple is better than complex” was KISS, “Errors should never pass silently” was step 6 of the refactor.
 -->
@@ -2292,7 +2292,7 @@ booking.balance_cents    # 3500: looks like a field, runs a method
 </div>
 
 <!--
-0.5 min · 41–41.5 elapsed
+0.5 min · 40.5–41 elapsed
 
 A dataclass doesn’t validate input: Pydantic does that at the API boundary (next slide). `slots=True` (3.10+) stores attributes in fixed slots instead of a per-object `__dict__`; on a non-frozen class, `booking.seat = 3` then raises AttributeError instead of quietly adding a new attribute.
 -->
@@ -2341,7 +2341,7 @@ BookingRequest(booking_id="A42", seats=0)
 </ul>
 
 <!--
-0.5 min · 41.5–42 elapsed
+0.5 min · 41–41.5 elapsed
 
 The string "2" becomes the int 2 because Pydantic coerces compatible input by default; strict mode turns that off.
 -->
@@ -2393,7 +2393,7 @@ total_cents(self, seats: int) -> int
 </div>
 
 <!--
-0.5 min · 42–42.5 elapsed
+0.5 min · 41.5–42 elapsed
 
 This is the class-level documentation from the comments slide: the place where a formula or a rounding rule belongs.
 -->
@@ -2463,7 +2463,7 @@ int
 </ul>
 
 <!--
-0.5 min · 42.5–43 elapsed
+0.5 min · 42–42.5 elapsed
 -->
 
 ---
@@ -2501,7 +2501,7 @@ uv run mkdocs build
 </div>
 
 <!--
-0.5 min · 43–43.5 elapsed
+0.5 min · 42.5–43 elapsed
 
 Each tool is a dev dependency: `uv add --dev pdoc` (or sphinx, or mkdocs mkdocstrings[python]). Run the build in CI so the docs never go stale.
 -->
@@ -2545,7 +2545,7 @@ logging.basicConfig(
 </div>
 
 <!--
-0.5 min · 43.5–44 elapsed
+0.5 min · 43–43.5 elapsed
 -->
 
 ---
@@ -2591,7 +2591,7 @@ seats = list(range(10))  # still the built-in
 </ul>
 
 <!--
-0.5 min · 44–44.5 elapsed
+0.5 min · 43.5–44 elapsed
 -->
 
 ---
@@ -2678,7 +2678,7 @@ service = BookingService(store=memory_store)
 </div>
 
 <!--
-1 min · 44.5–45.5 elapsed
+1 min · 44–45 elapsed
 
 Teach this through questions. Ask each one and wait for predictions before clicking.
 
@@ -2769,7 +2769,7 @@ postgres.create(booking)  # self.store.save -> Postgres...save
 </div>
 
 <!--
-1 min · 45.5–46.5 elapsed
+1 min · 45–46 elapsed
 
 **Q4 (before clicking):** “Which save runs for each call?” Let them trace `memory.create(booking)` and `postgres.create(booking)` to `self.store.save(booking)`. **Click:** the trace comments.
 
@@ -2805,7 +2805,7 @@ if (booking := find(index, "A42")) is None:                         # 3.8 · PEP
 </ul>
 
 <!--
-0.5 min · 46.5–47 elapsed
+0.5 min · 46–46.5 elapsed
 -->
 
 ---
@@ -2823,7 +2823,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 47–47.5 elapsed
+0.5 min · 46.5–47 elapsed
 -->
 
 ---
@@ -2845,10 +2845,11 @@ chapter: Features to learn
 <li>Built-ins: enumerate, zip, sum, any, all, map, and Counter</li>
 <li>f-strings, functools.lru_cache, copy and deepcopy</li>
 <li>pickle, decorators and type hints</li>
+<li>Going native: the C API and ABI, pybind11, PyO3 and maturin</li>
 </ul>
 
 <!--
-0.5 min · 47.5–48 elapsed
+0.5 min · 47–47.5 elapsed
 -->
 
 ---
@@ -2891,7 +2892,7 @@ for seat, guest in zip(seats, guests, strict=True):
 </ul>
 
 <!--
-0.5 min · 48–48.5 elapsed
+0.5 min · 47.5–48 elapsed
 -->
 
 ---
@@ -2935,7 +2936,7 @@ top_three = counts.most_common(3)
 </ul>
 
 <!--
-0.5 min · 48.5–49 elapsed
+0.5 min · 48–48.5 elapsed
 -->
 
 ---
@@ -2982,7 +2983,7 @@ all_valid = all(b.seats >= 1 for b in bookings)
 </ul>
 
 <!--
-0.5 min · 49–49.5 elapsed
+0.5 min · 48.5–49 elapsed
 -->
 
 ---
@@ -3020,7 +3021,7 @@ groups = [n for n in seat_counts if n > 10]
 </ul>
 
 <!--
-0.5 min · 49.5–50 elapsed
+0.5 min · 49–49.5 elapsed
 -->
 
 ---
@@ -3056,7 +3057,7 @@ f"{booking!r}"                # repr() instead of str()
 </div>
 
 <!--
-0.5 min · 50–50.5 elapsed
+0.5 min · 49.5–50 elapsed
 -->
 
 ---
@@ -3092,7 +3093,7 @@ seat_map.cache_info()   # CacheInfo(hits=1, misses=1, ...)
 </div>
 
 <!--
-0.5 min · 50.5–51 elapsed
+0.5 min · 50–50.5 elapsed
 -->
 
 ---
@@ -3130,7 +3131,7 @@ code                     # still 'a42': str is immutable
 </div>
 
 <!--
-0.5 min · 51–51.5 elapsed
+0.5 min · 50.5–51 elapsed
 
 Python’s model is “call by sharing”: there is no pass-by-copy and no pass-by-reference in the C++ sense. Assigning or passing never copies; mutating a shared mutable object is visible everywhere. Which is exactly why the next slide exists.
 -->
@@ -3171,7 +3172,7 @@ order["seats"]              # [12, 13, 14]: untouched
 </div>
 
 <!--
-0.5 min · 51.5–52 elapsed
+0.5 min · 51–51.5 elapsed
 -->
 
 ---
@@ -3206,7 +3207,7 @@ with open("bookings.pkl", "wb") as f:
 </div>
 
 <!--
-0.5 min · 52–52.5 elapsed
+0.5 min · 51.5–52 elapsed
 -->
 
 ---
@@ -3248,7 +3249,7 @@ def create_booking(booking_id: str, seats: int) -> Booking: ...
 </div>
 
 <!--
-0.5 min · 52.5–53 elapsed
+0.5 min · 52–52.5 elapsed
 
 For a fully typed decorator, look up `ParamSpec`: it keeps the wrapped function’s parameter types.
 -->
@@ -3293,7 +3294,28 @@ def first[T](items: list[T]) -> T: ...  # 3.12
 </ul>
 
 <!--
+0.5 min · 52.5–53 elapsed
+-->
+
+---
+
+<div class="kicker">PYTHON FEATURE · GOING NATIVE</div>
+
+# When Python needs C, C++ or Rust
+
+<div class="rows wide">
+<div><b>C API · ABI</b><span><strong>CPython’s C interface.</strong> Build against the stable ABI (<code>abi3</code>) and one wheel works across Python versions.</span></div>
+<div><b>pybind11 · nanobind</b><span><strong>C++ bindings.</strong> Expose C++ classes and functions to Python in a few lines.</span></div>
+<div><b>PyO3 + maturin</b><span><strong>Rust.</strong> Write the hot path in Rust; maturin builds and publishes the wheels. pydantic-core and polars ship this way.</span></div>
+<div><b>Cython</b><span><strong>Python-like code compiled to C.</strong> The classic way to speed up a tight loop.</span></div>
+</div>
+
+<div class="statement">Profile first. Most code never needs to leave Python.</div>
+
+<!--
 0.5 min · 53–53.5 elapsed
+
+Ruff and uv are Rust programs packaged with maturin too: that is how a Rust tool ends up installable with pip.
 -->
 
 ---
@@ -3332,7 +3354,7 @@ chapter: Tooling
 <ul class="check-list plain">
 <li>Format, lint and type-check</li>
 <li>A locked, reproducible environment with uv</li>
-<li>Tests as executable rules</li>
+<li>Ruff: one fast tool instead of six</li>
 </ul>
 
 <!--
@@ -3359,6 +3381,29 @@ chapter: Tooling
 
 ---
 
+<div class="kicker">TOOLING · RUFF</div>
+
+# Ruff: one tool instead of six
+
+<div class="rows wide">
+<div><b>flake8 + plugins</b><span><code>ruff check</code>: pyflakes, pycodestyle, bugbear (<code>B</code>), bandit (<code>S</code>) and more.</span></div>
+<div><b>black</b><span><code>ruff format</code>: a drop-in, Black-compatible formatter.</span></div>
+<div><b>isort</b><span>Rule <code>I</code>: sorted imports.</span></div>
+<div><b>pyupgrade</b><span>Rule <code>UP</code>: modern syntax for your target Python.</span></div>
+<div><b>pydocstyle</b><span>Rule <code>D</code>: docstring conventions.</span></div>
+<div><b>autoflake</b><span><code>--fix</code>: removes unused imports and variables.</span></div>
+</div>
+
+<div class="statement">Written in Rust, 10 to 100 times faster: quick enough to run on every save.</div>
+
+<!--
+0.5 min · 55–55.5 elapsed
+
+Configure it once in pyproject.toml: `[tool.ruff.lint] select = ["E", "F", "I", "UP", "B", "D", "S", "A"]`. Start with a small set and add rule families when they would have caught a real bug.
+-->
+
+---
+
 <div class="kicker">TOOLING · UV</div>
 
 # Rebuild the same environment with one command
@@ -3381,7 +3426,7 @@ uv run pytest -q
 </ul>
 
 <!--
-0.5 min · 55–55.5 elapsed
+0.5 min · 55.5–56 elapsed
 -->
 
 ---
@@ -3392,39 +3437,15 @@ uv run pytest -q
 
 <div class="panels two">
 <div class="panel"><b>Start here</b><h2>mypy</h2><p>The reference checker. Turn on <code>strict</code> for the modules you own and tighten from there.</p></div>
-<div class="panel"><b>Compare on your code</b><h2>Pyright · ty · Pyrefly</h2><p>Faster or stricter in places; compare them on your own repo. VS Code’s <strong>Pylance</strong> is Microsoft’s closed-source build on Pyright; <strong>basedpyright</strong> is an open-source fork with extra checks.</p></div>
+<div class="panel"><b>Compare on your code</b><h2>pyright · ty · pyrefly</h2><p>Faster or stricter in places; compare them on your own repo. VS Code’s <strong>Pylance</strong> is Microsoft’s closed-source build on pyright; <strong>basedpyright</strong> is an open-source fork with extra checks.</p></div>
 </div>
 
 <div class="statement">Several checkers in the editor is fine. One of them blocks the merge.</div>
 
 <!--
-0.5 min · 55.5–56 elapsed
-
-Pyright is Microsoft’s open-source checker; Pylance wraps it for VS Code with extra, closed-source features; basedpyright is a community fork that brings several of those features to any editor. ty is Astral’s (the Ruff and uv team), Pyrefly is Meta’s.
--->
-
----
-
-<div class="kicker">TOOLING · TESTS</div>
-
-# Tests: rules written as examples
-
-```python
-def test_early_bird_takes_20_percent_off() -> None:
-    assert EarlyBirdPricing().total_cents(seats=2) == 5600
-
-
-def test_same_booking_id_twice_is_a_conflict() -> None:
-    with TestClient(create_app()) as client:
-        payload = {"booking_id": "A42", "seats": 2}
-        assert client.post("/bookings", json=payload).status_code == 201
-        assert client.post("/bookings", json=payload).status_code == 409
-```
-
-<div class="statement">A test is a rule you can run. In part two, it’s also how you’ll check an agent’s work.</div>
-
-<!--
 0.5 min · 56–56.5 elapsed
+
+pyright is Microsoft’s open-source checker; Pylance wraps it for VS Code with extra, closed-source features; basedpyright is a community fork that brings several of those features to any editor. ty is Astral’s (the Ruff and uv team), pyrefly is Meta’s.
 -->
 
 ---

@@ -304,7 +304,10 @@
 }
 .deck-foot .bar { flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-strong), rgba(68, 56, 107, 0.15)); }
 .deck-foot .page { color: var(--accent); }
+/* Age of AI pages: the whole footer (label, line, number) goes cyan. */
+.deck-chrome.is-ai .deck-foot { color: #8ec5d3; }
 .deck-chrome.is-ai .page { color: var(--ai); }
+.deck-chrome.is-ai .bar { background: linear-gradient(90deg, rgba(126, 224, 245, 0.45), rgba(126, 224, 245, 0.08)); }
 
 /* ── Long click-through code (refactor sequence) ────────────────────── */
 .code-notes.small .slidev-code, .code-notes.small .shiki-magic-move-container {
