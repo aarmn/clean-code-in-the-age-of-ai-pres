@@ -121,7 +121,7 @@ chapter: Why clean code
 <div class="statement">Clean code isn’t short code. It’s code the next person can change without fear.</div>
 
 <!--
-1 min · 3.5–4.5 elapsed
+0.5 min · 3.5–4 elapsed
 
 Ask: “Who has opened their own code from six months ago and had to re-learn it?” These three questions are the yardstick for everything that follows.
 -->
@@ -161,7 +161,7 @@ AGENTS.md       how people and agents work here
 </div>
 
 <!--
-1 min · 4.5–5.5 elapsed
+1 min · 4–5 elapsed
 
 **Introduce it properly:** “We’re selling seats for a workshop like this one. A client books seats with an ID; we price them, reject duplicates and reject zero seats.” The `workshop/` folder holds the working project with tests.
 -->
@@ -176,7 +176,7 @@ AGENTS.md       how people and agents work here
 <li><span>02</span>Principles: KISS, DRY, YAGNI, SOLID</li>
 <li><span>03</span>Code smells</li>
 <li><span>04</span>Design patterns</li>
-<li><span>05</span>Structure: MVC, MVVM, GRASP</li>
+<li><span>05</span>Structure: MVC, layers, GRASP</li>
 </ol></div>
 <div class="roadmap-group python"><b>PYTHON</b><ol>
 <li><span>06</span>The language and its standard library</li>
@@ -190,7 +190,7 @@ AGENTS.md       how people and agents work here
 <div class="statement">Every topic fixes a real problem in the booking API, then ends with one piece of advice.</div>
 
 <!--
-0.5 min · 5.5–6 elapsed
+0.5 min · 5–5.5 elapsed
 
 Point at the footer: it always shows which part and chapter we’re in.
 -->
@@ -217,7 +217,7 @@ chapter: Readability
 </ul>
 
 <!--
-0.5 min · 6–6.5 elapsed
+0.5 min · 5.5–6 elapsed
 -->
 
 ---
@@ -365,7 +365,7 @@ def create_booking(request):
 </div>
 
 <!--
-2.5 min · 6.5–9 elapsed
+2 min · 6–8 elapsed
 
 **Before clicking:** Give the room 30 seconds. “What would you be afraid to change here?” Then read the red list.
 
@@ -544,7 +544,7 @@ class BookingService:
 </div>
 
 <!--
-2.5 min · 9–11.5 elapsed
+2 min · 8–10 elapsed
 
 **This is the heaviest change, so take it one concept at a time.** Each click adds exactly one idea: typed inputs, exceptions, a data class, behavior on the object that owns the data (OOP), and finally a service that receives its dependencies.
 
@@ -595,7 +595,7 @@ return full - full * self.percent_off // 100
 </ul>
 
 <!--
-0.5 min · 11.5–12 elapsed
+0.5 min · 10–10.5 elapsed
 
 Good code needs few comments unless it’s doing something genuinely complex. Class-level documentation and the formula behind a tricky calculation are worth writing down.
 -->
@@ -615,7 +615,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 12–12.5 elapsed
+0.5 min · 10.5–11 elapsed
 -->
 
 ---
@@ -639,7 +639,7 @@ chapter: Principles
 </ul>
 
 <!--
-0.5 min · 12.5–13 elapsed
+0.5 min · 11–11.5 elapsed
 -->
 
 ---
@@ -700,7 +700,7 @@ def validate(r: BookingRequest,
 </ScrollStage>
 
 <!--
-1 min · 13–14 elapsed
+1 min · 11.5–12.5 elapsed
 
 **Click:** the content slides up under the title to show the rest of the reasons.
 
@@ -754,7 +754,7 @@ total = total_cents(seats)
 </ul>
 
 <!--
-1 min · 14–15 elapsed
+1 min · 12.5–13.5 elapsed
 
 **Stress this one.** Most bugs in growing codebases are two copies of the same rule drifting apart. Ask: “if this rule changes, how many places do I edit?” The answer should be one.
 
@@ -770,7 +770,7 @@ class: one-note
 <p class="lead">Generalizing early, for cases that don’t exist and never will, is how a two-line rule grows into a framework. Which brings us to YAGNI.</p>
 
 <!--
-0.5 min · 15–15.5 elapsed
+0.5 min · 13.5–14 elapsed
 
 Premature generalization looks like DRY: “these might share logic one day.” It costs simplicity today for a future that rarely arrives.
 -->
@@ -817,7 +817,7 @@ SEAT_PRICE_CENTS = 3500
 </ul>
 
 <!--
-1 min · 15.5–16.5 elapsed
+1 min · 14–15 elapsed
 
 YAGNI and DRY work together: DRY keeps the future change small, so YAGNI lets you wait for it.
 -->
@@ -869,7 +869,7 @@ def create_booking(
 </ul>
 
 <!--
-1 min · 16.5–17.5 elapsed
+1 min · 15–16 elapsed
 
 A responsibility is a reason to change, not a line count. Split too eagerly and you get ten one-line classes: that’s where S fights KISS and YAGNI.
 -->
@@ -917,11 +917,11 @@ class PostgresBookingStore:   # new, no edits
 <ul class="check-list plain why">
 <li>Every new backend meant editing <code>BookingService</code> and retesting all of it.</li>
 <li>Now the service talks to the <code>BookingStore</code> protocol. A new store is a new class; nothing else changes.</li>
-<li>Handing the store to the service from outside is dependency injection, more on it after D. We’ll unpack Python protocols in the Python section.</li>
+<li>Handing the store to the service from outside is dependency injection; we’ll name it properly in the Design patterns chapter. Python protocols get their own detour in the Python section.</li>
 </ul>
 
 <!--
-1 min · 17.5–18.5 elapsed
+1 min · 16–17 elapsed
 -->
 
 ---
@@ -967,7 +967,7 @@ class CachedBookingStore(MemoryBookingStore):
 </ul>
 
 <!--
-1 min · 18.5–19.5 elapsed
+1 min · 17–18 elapsed
 -->
 
 ---
@@ -987,7 +987,7 @@ class CachedBookingStore(MemoryBookingStore):
 <p v-click><strong>No.</strong> The new ID isn’t cached, so <code>get</code> raises <code>KeyError</code>. An unexpected exception breaks the promise the service relies on: the behavior of P changed.</p>
 
 <!--
-0.5 min · 19.5–20 elapsed
+0.5 min · 18–18.5 elapsed
 
 Let the room answer the question before clicking. Then click for the answer.
 -->
@@ -1041,7 +1041,7 @@ seats_sold(FakeReader([Booking("A42", 2, 7000)]))
 </ul>
 
 <!--
-1 min · 20–21 elapsed
+1 min · 18.5–19.5 elapsed
 -->
 
 ---
@@ -1089,106 +1089,24 @@ test_service = BookingService(
 </ul>
 
 <!--
-1 min · 21–22 elapsed
+1 min · 19.5–20.5 elapsed
 -->
 
 ---
-
-<div class="kicker">SOLID · D IN PRACTICE</div>
-
-# Dependency injection: how we got the inversion
-
-<div class="code-notes wide">
-<div>
-
-```python
-# 1. Constructor injection: the caller decides
-service = BookingService(store=MemoryBookingStore(),
-                         payments=FakePayments())
-
-# 2. FastAPI does the wiring for each request
-def get_service() -> BookingService:
-    return BookingService(make_store(get_settings()),
-                          StripePayments())
-
-@app.post("/bookings", status_code=201)
-def create_booking(
-    req: BookingRequest,
-    service: Annotated[BookingService, Depends(get_service)],
-) -> BookingResponse: ...
-```
-
-</div>
-<div>
-<ul class="check-list plain">
-<li><strong>Inversion</strong> is the goal: rules depend on abstractions, not on details.</li>
-<li><strong>Injection</strong> is the usual technique: dependencies are passed in from outside.</li>
-<li>Injecting a concrete <code>SqliteBookingStore</code> type is DI without DIP.</li>
-<li>No framework needed: a constructor argument is enough. Tests swap it with <code>app.dependency_overrides</code>.</li>
-</ul>
-</div>
-</div>
-
-<!--
-1 min · 22–23 elapsed
-
-**Answer to “is dependency inversion just dependency injection?”** No, but they travel together. DIP is a design property; DI is the most common way to get it in Python.
--->
-
+class: foreshadow
+footer: false
 ---
 
-<div class="kicker">SOLID · D IN PRACTICE · SERVICE LOCATOR</div>
+<div class="kicker">COMING UP</div>
 
-# Inversion without constructor injection
+# Two design patterns make inversion real
 
-<div class="compare">
-<div>
-<span class="label good">Constructor injection: setup hands it in</span>
-
-```python
-class BookingService:
-    def __init__(self, store: BookingStore) -> None:
-        self.store = store
-
-    def create(self, booking: Booking) -> None:
-        self.store.save(booking)
-
-# startup
-service = BookingService(PostgresBookingStore(DSN))
-```
-
-</div>
-<div>
-<span class="label">Service locator: the service pulls it out</span>
-
-```python
-# startup
-registry.register(BookingStore,
-                  PostgresBookingStore(DSN))
-
-class BookingService:
-    def create(self, booking: Booking) -> None:
-        store = registry.get(BookingStore)
-        store.save(booking)
-
-service = BookingService()   # no store in sight
-```
-
-</div>
-</div>
-
-<ul class="check-list plain why">
-<li>Both keep the inversion: the service asks for its own <code>BookingStore</code> contract, and the Postgres adapter conforms to it.</li>
-<li>Injection makes the dependency visible in the constructor; a test just passes a fake.</li>
-<li>The locator hides the lookup inside the method. Forget to register a store and it fails at runtime, on the first booking.</li>
-</ul>
+<p class="lead">Dependency Injection and Service Locator. Keep D in mind: we’ll meet both in the Design patterns chapter.</p>
 
 <!--
-1 min · 23–24 elapsed
+0.5 min · 20.5–21 elapsed
 
-**Ask:** “Who chooses the concrete store, and who asks for it?” In both versions, application setup chooses the implementation (Postgres). The difference is whether setup hands the store to the service, or the service pulls it from a registry at runtime.
-
-The registry is just a dict from a type to an object: `register` stores PostgresBookingStore under the BookingStore key, `get` looks it up. That runtime resolution is the Service Locator pattern. The trade-off is visibility.
+Plant the idea now, pay it off later. D says what to depend on; the two patterns are how you wire it. When we reach them, point back to this slide.
 -->
 
 ---
@@ -1206,7 +1124,7 @@ The registry is just a dict from a type to an object: `register` stores Postgres
 </div>
 
 <!--
-0.5 min · 24–24.5 elapsed
+0.5 min · 21–21.5 elapsed
 
 Same code, different questions. Adding the Postgres store is one change that has to pass all three.
 -->
@@ -1215,10 +1133,10 @@ Same code, different questions. Adding the Postgres store is one change that has
 class: one-note
 ---
 
-# SOLID is <FuzzyWord>fuzzy</FuzzyWord>: good defaults you bend with judgment.
+# Design principles, SOLID included, are <FuzzyWord>fuzzy</FuzzyWord>: good defaults you bend with judgment.
 
 <!--
-0.5 min · 24.5–25 elapsed
+0.5 min · 21.5–22 elapsed
 
 Explain in your own words: these are guidelines with a lot of interpretation, not laws. Apply them where they reduce the cost of change; bend them when they make the code harder to follow.
 -->
@@ -1239,14 +1157,14 @@ Explain in your own words: these are guidelines with a lot of interpretation, no
 <div class="statement">When two principles disagree, follow the one that protects the change you expect next.</div>
 
 <!--
-1 min · 25–26 elapsed
+0.5 min · 22–22.5 elapsed
 
 SOLID pulls toward more, smaller pieces; KISS and YAGNI pull toward fewer. The last row is the Liskov example from a few slides ago: inheritance chosen for reuse (DRY) is exactly what broke substitutability.
 -->
 
 ---
 
-<div class="kicker">DESIGN BY CONTRACT</div>
+<div class="kicker">DESIGN BY CONTRACT <span style="text-transform: none">(DbC)</span></div>
 
 # A protocol lists operations. A contract states promises.
 
@@ -1259,7 +1177,7 @@ SOLID pulls toward more, smaller pieces; KISS and YAGNI pull toward fewer. The l
 <div class="statement">A substitute may ask for less and promise more, never the reverse. That’s exactly what Liskov asks it to preserve.</div>
 
 <!--
-0.5 min · 26–26.5 elapsed
+0.5 min · 22.5–23 elapsed
 
 Conceptual only. A protocol tells you which methods exist; a contract tells you what they mean. Writing the contract down is how you explain what a substitute has to keep.
 -->
@@ -1279,7 +1197,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 26.5–27 elapsed
+0.5 min · 23–23.5 elapsed
 -->
 
 ---
@@ -1305,7 +1223,7 @@ chapter: Code smells
 </ul>
 
 <!--
-0.5 min · 27–27.5 elapsed
+0.5 min · 23.5–24 elapsed
 -->
 
 ---
@@ -1355,7 +1273,7 @@ refund(BookingId("A42"), Money(cents=3500))
 </ul>
 
 <!--
-1 min · 27.5–28.5 elapsed
+1 min · 24–25 elapsed
 -->
 
 ---
@@ -1399,7 +1317,7 @@ total = (SEAT_PRICE * seats).percent_off(20) + BOOKING_FEE
 </div>
 
 <!--
-1 min · 28.5–29.5 elapsed
+0.5 min · 25–25.5 elapsed
 
 Compare the last line with `total -= total * 20 // 100`: the method name is the documentation. Python’s data model (`__add__`, `__mul__`, `__eq__`, `__lt__`) lets your own types behave like numbers where that makes sense.
 -->
@@ -1422,7 +1340,7 @@ Compare the last line with `total -= total * 20 // 100`: the method name is the 
 <div class="statement">Move up a step when the code asks for it, not before.</div>
 
 <!--
-0.5 min · 29.5–30 elapsed
+0.5 min · 25.5–26 elapsed
 
 This is the refactor from chapter one, seen as a rule: we started with a working, ugly function and grew it one concept at a time. Starting from an elaborate class hierarchy is how you end up with the rules engine from the KISS slide.
 -->
@@ -1470,7 +1388,7 @@ notifier.booking_created(booking)
 </ul>
 
 <!--
-1 min · 30–31 elapsed
+1 min · 26–27 elapsed
 -->
 
 ---
@@ -1505,7 +1423,6 @@ class EarlyBirdPricing:
         full = seats * self.seat_cents
         return full - full * self.percent_off // 100
 
-
 # api.py
 total = pricing.total_cents(seats)
 ```
@@ -1515,12 +1432,12 @@ total = pricing.total_cents(seats)
 
 <ul class="check-list plain why">
 <li><code>quote()</code> uses nothing of its own: every value comes from the pricing object.</li>
-<li>Change the discount rule and you’d edit the API. Move the behavior to the data it uses.</li>
-<li>This is GRASP’s Information Expert, seen from the smell side.</li>
+<li>Change the discount rule and you’d edit the API. Move the behavior to the data it uses: GRASP’s Information Expert, seen from the smell side.</li>
+<li>Bigger picture: layers (presentation, business logic, data access), in the Structure chapter.</li>
 </ul>
 
 <!--
-1 min · 31–32 elapsed
+1 min · 27–28 elapsed
 -->
 
 ---
@@ -1536,13 +1453,10 @@ total = pricing.total_cents(seats)
 ```python
 # api.py
 if booking.status == "cancelled": ...
-
 # emails.py
 if status in ("active", "cancelled"): ...
-
 # report.py
 STATUSES = ["active", "cancelled"]
-
 # admin.py
 if booking.status == "canceled": ...  # typo!
 ```
@@ -1569,10 +1483,62 @@ if booking.status is BookingStatus.CANCELLED: ...
 <li>Adding “waitlisted” meant hunting string literals across four files, and one already had a typo.</li>
 <li>One enum is the single source: mypy flags typos and <code>match</code> statements that miss a case.</li>
 <li>Shotgun surgery is DRY’s alarm bell: the same knowledge scattered across many places.</li>
+<li>Let your editor’s language server (LSP) guide you: “find references” and “rename” follow an enum member, not a string literal.</li>
 </ul>
 
 <!--
-1 min · 32–33 elapsed
+1 min · 28–29 elapsed
+-->
+
+---
+
+<div class="kicker">BONUS · LITERAL OR ENUM?</div>
+
+# Two DRY ways to name a fixed set of values
+
+<div class="compare">
+<div>
+<span class="label good">A union of string literals</span>
+
+```python
+BookingStatus = Literal[
+    "active", "cancelled", "waitlisted",
+]
+
+def label(status: BookingStatus) -> str: ...
+
+label("cancelled")   # OK
+label("canceled")    # mypy: not a valid literal
+```
+
+</div>
+<div>
+<span class="label good">An enum</span>
+
+```python
+class BookingStatus(StrEnum):
+    ACTIVE = "active"
+    CANCELLED = "cancelled"
+    WAITLISTED = "waitlisted"
+
+def label(status: BookingStatus) -> str: ...
+
+label(BookingStatus.CANCELLED)   # OK
+label("cancelled")               # mypy: wrong type
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li>Both are DRY when defined once, and both are checked by mypy and your editor.</li>
+<li>Literals stay plain strings at runtime: natural in JSON, and the usual TypeScript style.</li>
+<li>An enum is a real runtime type you can loop over and give methods; Python codebases tend to reach for it first.</li>
+<li>Mostly a matter of convention, not capability.</li>
+</ul>
+
+<!--
+0.5 min · 29–29.5 elapsed
 -->
 
 ---
@@ -1590,7 +1556,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 33–33.5 elapsed
+0.5 min · 29.5–30 elapsed
 -->
 
 ---
@@ -1613,10 +1579,11 @@ chapter: Design patterns
 <li>Strategy: swap a rule</li>
 <li>Adapter: translate a vendor’s API</li>
 <li>Singleton: one shared instance, used carefully</li>
+<li>Dependency Injection and Service Locator: inversion in practice</li>
 </ul>
 
 <!--
-0.5 min · 33.5–34 elapsed
+0.5 min · 30–30.5 elapsed
 -->
 
 ---
@@ -1658,7 +1625,7 @@ service = BookingService(
 </div>
 
 <!--
-1 min · 34–35 elapsed
+1 min · 30.5–31.5 elapsed
 
 This is a factory function, not a reason to build factory classes. The settings value comes from the environment, so it still needs runtime validation: that’s the ValueError.
 -->
@@ -1704,7 +1671,7 @@ service = BookingService(store, pricing=EarlyBirdPricing())
 </div>
 
 <!--
-1 min · 35–36 elapsed
+1 min · 31.5–32.5 elapsed
 
 In Python a strategy can simply be a function, `Callable[[int], int]`; a class earns its place when the rule has settings, like the percentage here.
 -->
@@ -1749,7 +1716,7 @@ class StripePayments:
 </div>
 
 <!--
-1 min · 36–37 elapsed
+1 min · 32.5–33.5 elapsed
 
 An adapter translates at a boundary you don’t control. A `FakePayments` in tests appends to a list, so no network call and no test card is needed.
 -->
@@ -1758,7 +1725,49 @@ An adapter translates at a boundary you don’t control. A `FakePayments` in tes
 
 <div class="kicker">DESIGN PATTERN · SINGLETON</div>
 
-# One Settings object, passed in
+# The classic singleton: one instance, enforced
+
+<div class="code-notes">
+<div>
+
+```python
+class Settings:
+    _instance: ClassVar["Settings | None"] = None
+
+    def __new__(cls) -> "Settings":
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._load()      # runs only once
+        return cls._instance
+
+    def _load(self) -> None:
+        self.store = os.environ.get("BOOKING_STORE", "memory")
+
+
+assert Settings() is Settings()        # the same object
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li><code>__new__</code> creates the object; overriding it hands back the same one every time.</li>
+<li>Careful: <code>__init__</code> still runs on every <code>Settings()</code> call, so one-time setup goes in <code>__new__</code>, or in a metaclass’s <code>__call__</code>.</li>
+<li>It’s still a global in disguise: tests can’t easily get a fresh one.</li>
+</ul>
+</div>
+</div>
+
+<!--
+1 min · 33.5–34.5 elapsed
+
+This is the Gang of Four singleton, enforced by the class itself. The metaclass version overrides `type.__call__` and keeps a dict of instances, so `__init__` runs once too. Then show the next slide: the Pythonic version doesn’t enforce anything, and that’s usually better.
+-->
+
+---
+
+<div class="kicker">DESIGN PATTERN · SINGLETON, THE PYTHONIC WAY</div>
+
+# One Settings object, by convention, passed in
 
 <div class="code-notes">
 <div>
@@ -1788,17 +1797,116 @@ def create_booking(
 <ul class="check-list bad"><li><code>Settings()</code> built at import time in every module, impossible to change in tests</li></ul>
 <span class="label">After</span>
 <ul class="check-list good">
-<li>Created once, on first use</li>
-<li>Injected, not imported as a global</li>
-<li>Tests swap it with <code>dependency_overrides</code></li>
+<li>Created once, on first use, by <code>get_settings()</code></li>
+<li>Not enforced: a singleton by convention</li>
+<li>Injected, so tests swap it with <code>dependency_overrides</code></li>
 </ul>
 </div>
 </div>
 
 <!--
-1 min · 37–38 elapsed
+1 min · 34.5–35.5 elapsed
 
-One instance is fine; a hidden global is the problem. Keep singletons for read-only things like settings or a client.
+Strictly, this isn’t a singleton: `Settings()` still makes a second object. It’s one instance by convention, because everyone goes through `get_settings()`. Python modules are singletons too, which is why a module-level object is the other common answer. Keep singletons for read-only things like settings or a client.
+-->
+
+---
+
+<div class="kicker">DESIGN PATTERN · DEPENDENCY INJECTION</div>
+
+# Dependency injection: inversion in practice
+
+<div class="code-notes wide">
+<div>
+
+```python
+# 1. Constructor injection: the caller decides
+service = BookingService(store=MemoryBookingStore(),
+                         payments=FakePayments())
+
+# 2. FastAPI does the wiring for each request
+def get_service() -> BookingService:
+    return BookingService(make_store(get_settings()),
+                          StripePayments())
+
+@app.post("/bookings", status_code=201)
+def create_booking(
+    req: BookingRequest,
+    service: Annotated[BookingService, Depends(get_service)],
+) -> BookingResponse: ...
+```
+
+</div>
+<div>
+<ul class="check-list plain">
+<li><strong>Remember D?</strong> Inversion is the goal: rules depend on abstractions, not on details.</li>
+<li><strong>Injection</strong> is the usual technique: dependencies are passed in from outside.</li>
+<li>Injecting a concrete <code>SqliteBookingStore</code> type is DI without DIP.</li>
+<li>No framework needed: a constructor argument is enough. Tests swap it with <code>app.dependency_overrides</code>.</li>
+</ul>
+</div>
+</div>
+
+<!--
+1 min · 35.5–36.5 elapsed
+
+**Answer to “is dependency inversion just dependency injection?”** No, but they travel together. DIP is a design property; DI is the most common way to get it in Python.
+-->
+
+---
+
+<div class="kicker">DESIGN PATTERN · SERVICE LOCATOR</div>
+
+# Inversion without constructor injection
+
+<div class="compare">
+<div>
+<span class="label good">Constructor injection: setup hands it in</span>
+
+```python
+class BookingService:
+    def __init__(self, store: BookingStore) -> None:
+        self.store = store
+
+    def create(self, booking: Booking) -> None:
+        self.store.save(booking)
+
+# startup
+service = BookingService(PostgresBookingStore(DSN))
+```
+
+</div>
+<div>
+<span class="label">Service locator: the service pulls it out</span>
+
+```python
+# startup
+registry.register(BookingStore,
+                  PostgresBookingStore(DSN))
+
+class BookingService:
+    def create(self, booking: Booking) -> None:
+        store = registry.get(BookingStore)
+        store.save(booking)
+
+service = BookingService()   # no store in sight
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li>Both keep the inversion: the service asks for its own <code>BookingStore</code> contract, and the Postgres adapter conforms to it.</li>
+<li>Injection makes the dependency visible in the constructor; a test just passes a fake.</li>
+<li>The locator hides the lookup inside the method. Forget to register a store and it fails at runtime, on the first booking.</li>
+</ul>
+
+<!--
+0.5 min · 36.5–37 elapsed
+
+**Ask:** “Who chooses the concrete store, and who asks for it?” In both versions, application setup chooses the implementation (Postgres). The difference is whether setup hands the store to the service, or the service pulls it from a registry at runtime.
+
+The registry is just a dict from a type to an object: `register` stores PostgresBookingStore under the BookingStore key, `get` looks it up. That runtime resolution is the Service Locator pattern. The trade-off is visibility.
 -->
 
 ---
@@ -1816,7 +1924,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 38–38.5 elapsed
+0.5 min · 37–37.5 elapsed
 -->
 
 ---
@@ -1836,12 +1944,13 @@ chapter: Structure
 
 <ul class="check-list plain">
 <li>MVC: request handling for our API</li>
-<li>MVVM: state for a seat-picker screen</li>
+<li>Layers: presentation, business logic, data access</li>
+<li>Where business logic lives: client or server</li>
 <li>GRASP: who should do what</li>
 </ul>
 
 <!--
-0.5 min · 38.5–39 elapsed
+0.5 min · 37.5–38 elapsed
 
 “Model” in this chapter means your domain model, not a machine-learning model.
 -->
@@ -1886,51 +1995,29 @@ def create_booking(req: BookingRequest) -> BookingResponse:
 </div>
 
 <!--
-1 min · 39–40 elapsed
+1 min · 38–39 elapsed
 
 Our API already is MVC; we just hadn’t named it.
 -->
 
 ---
 
-<div class="kicker">STRUCTURE · MVVM</div>
+<div class="kicker">STRUCTURE · LAYERS</div>
 
-# MVVM: a ViewModel holds the screen’s state
+# Three layers: presentation, business logic, data access
 
-<div class="code-notes wide">
-<div>
-
-```python
-@dataclass
-class SeatPickerViewModel:
-    seats_left: int
-    selected: int = 0
-    error: str | None = None
-
-    @property
-    def can_book(self) -> bool:
-        return 0 < self.selected <= self.seats_left
-
-    def select(self, seats: int) -> None:
-        self.selected = seats
-        self.error = None if self.can_book else "Not enough seats"
-```
-
+<div class="rows wide">
+<div><b>Presentation</b><span><code>api.py</code>: FastAPI routes, request and response models. Speaks HTTP, knows no rules.</span></div>
+<div><b>Business logic</b><span><code>domain.py</code>: <code>BookingService</code>, <code>Booking</code>, pricing. Knows the rules, not HTTP or SQL.</span></div>
+<div><b>Data access</b><span><code>storage.py</code>: <code>MemoryBookingStore</code>, <code>PostgresBookingStore</code>. Knows the database.</span></div>
 </div>
-<div>
-<span class="label">Who does what</span>
-<ul class="check-list plain">
-<li><strong>View:</strong> binds the Book button to <code>can_book</code> and shows <code>error</code>.</li>
-<li><strong>ViewModel:</strong> screen state with no widgets, so plain asserts can test it.</li>
-<li><strong>Model:</strong> prices and duplicate checks stay in the service.</li>
-</ul>
-</div>
-</div>
+
+<div class="statement">Each layer only calls the one below it. Also known as three-tier, or n-tier, architecture.</div>
 
 <!--
-1 min · 40–41 elapsed
+1 min · 39–40 elapsed
 
-MVVM is how Vue, SwiftUI, Jetpack Compose and WPF apps are usually built.
+Strictly, “layers” are a logical split and “tiers” are where code runs (browser, server, database), but people use the words interchangeably. Our booking API already has all three: we built them during the refactor.
 -->
 
 ---
@@ -1948,14 +2035,14 @@ MVVM is how Vue, SwiftUI, Jetpack Compose and WPF apps are usually built.
 <div class="statement">A rule in the client is a suggestion. A rule on the server is a rule.</div>
 
 <!--
-0.5 min · 41–41.5 elapsed
+0.5 min · 40–40.5 elapsed
 
-This is why the ViewModel on the previous slide only shapes data for the screen. The price shown in the app is a preview; the server computes the one that gets charged.
+The presentation layer can run in a browser or a phone, but the business logic layer stays on the server. The price shown in the app is a preview; the server computes the one that gets charged.
 -->
 
 ---
 
-<div class="kicker">STRUCTURE · GRASP</div>
+<div class="kicker">STRUCTURE · GRASP · GENERAL RESPONSIBILITY ASSIGNMENT SOFTWARE PATTERNS</div>
 
 # GRASP: give each job to the right object
 
@@ -1992,7 +2079,7 @@ class BookingService:              # Controller: handles the
 </div>
 
 <!--
-1 min · 41.5–42.5 elapsed
+1 min · 40.5–41.5 elapsed
 
 GRASP isn’t an architecture like MVC; it’s a checklist for assigning responsibilities.
 -->
@@ -2012,7 +2099,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 42.5–43 elapsed
+0.5 min · 41.5–42 elapsed
 
 That closes the language-independent concepts. From here on it’s Python.
 -->
@@ -2040,7 +2127,7 @@ chapter: Python
 </ul>
 
 <!--
-0.5 min · 43–43.5 elapsed
+0.5 min · 42–42.5 elapsed
 -->
 
 ---
@@ -2057,11 +2144,12 @@ chapter: Python
 </div>
 
 <!--
-0.5 min · 43.5–44 elapsed
+0.5 min · 42.5–43 elapsed
 -->
 
 ---
 class: zen
+clicks: 1
 ---
 
 <svg class="zen-branch" viewBox="0 0 360 260" aria-hidden="true">
@@ -2096,21 +2184,36 @@ class: zen
 
 # The Zen of Python
 
+<ScrollStage :shift="215" :height="318">
+
 <div class="zen-lines">
 <p>Beautiful is better than ugly.</p>
 <p>Explicit is better than implicit.</p>
 <p>Simple is better than complex.</p>
+<p>Complex is better than complicated.</p>
 <p>Flat is better than nested.</p>
+<p>Sparse is better than dense.</p>
 <p>Readability counts.</p>
+<p>Special cases aren’t special enough to break the rules.</p>
+<p>Although practicality beats purity.</p>
 <p>Errors should never pass silently.</p>
+<p>Unless explicitly silenced.</p>
 <p>In the face of ambiguity, refuse the temptation to guess.</p>
+<p>There should be one, and preferably only one, obvious way to do it.</p>
+<p>Although that way may not be obvious at first unless you’re Dutch.</p>
+<p>Now is better than never.</p>
+<p>Although never is often better than <em>right</em> now.</p>
 <p>If the implementation is hard to explain, it’s a bad idea.</p>
+<p>If the implementation is easy to explain, it may be a good idea.</p>
+<p>Namespaces are one honking great idea: let’s do more of those!</p>
 </div>
 
-<p class="muted" style="font-size: 14px; margin-top: 20px; position: relative; z-index: 1">By Tim Peters. Type <code>import this</code> in Python to read all nineteen.</p>
+<p class="muted" style="font-size: 14px; margin-top: 16px; position: relative; z-index: 1">The Zen of Python, by Tim Peters. Type <code>import this</code> to see it in your own terminal.</p>
+
+</ScrollStage>
 
 <!--
-1 min · 44–45 elapsed
+1 min · 43–44 elapsed
 
 Point back at what we’ve done: “Readability counts” was chapter one, “Simple is better than complex” was KISS, “Errors should never pass silently” was step 6 of the refactor.
 -->
@@ -2160,9 +2263,58 @@ class Booking:
 </div>
 
 <!--
-0.5 min · 45–45.5 elapsed
+0.5 min · 44–44.5 elapsed
 
 A dataclass doesn’t validate input: Pydantic does that at the API boundary. StrEnum is 3.11+, slots=True is 3.10+.
+-->
+
+---
+
+<div class="kicker">PYTHON · PYDANTIC</div>
+
+# Pydantic: validate data at the boundary
+
+<div class="compare">
+<div>
+<span class="label bad">✕ A dataclass trusts its input</span>
+
+```python
+@dataclass
+class BookingRequest:
+    booking_id: str
+    seats: int
+
+BookingRequest(booking_id="A42", seats="two")
+# no error: seats is now the string "two"
+```
+
+</div>
+<div>
+<span class="label good">✓ A Pydantic model checks it</span>
+
+```python
+class BookingRequest(BaseModel):
+    booking_id: str = Field(min_length=1)
+    seats: int = Field(ge=1)
+
+BookingRequest(booking_id="A42", seats="2")  # 2
+BookingRequest(booking_id="A42", seats=0)
+# ValidationError: seats must be >= 1
+```
+
+</div>
+</div>
+
+<ul class="check-list plain why">
+<li>Use it where untrusted data enters: API requests, config files and environment variables (<code>pydantic-settings</code>).</li>
+<li>FastAPI uses these models to validate requests and to build the OpenAPI schema.</li>
+<li>Inside the domain, plain dataclasses stay simple and fast: validate once, at the edge.</li>
+</ul>
+
+<!--
+1 min · 44.5–45.5 elapsed
+
+The string "2" becomes the int 2 because Pydantic coerces compatible input by default; strict mode turns that off.
 -->
 
 ---
@@ -3595,14 +3747,15 @@ chapter: Resources
 
 <div class="kicker">KEEP GOING</div>
 
-# Watch, then practice
+# Watch, read, practice
 
 <div class="rows wide">
-<div><b><a href="https://www.youtube.com/@mCoding">mCoding</a></b><span><strong>Python, explained precisely.</strong> Short videos on how the language really works, and the mistakes people make with it.</span></div>
-<div><b><a href="https://www.youtube.com/@ArjanCodes">ArjanCodes</a></b><span><strong>Software design in Python.</strong> SOLID, design patterns and refactoring, on realistic code.</span></div>
-<div><b><a href="https://www.youtube.com/@CodeAesthetic">CodeAesthetic</a></b><span><strong>Clean code, beautifully animated.</strong> Naming, nesting, abstraction and comments in a few minutes each.</span></div>
-<div><b><a href="https://www.youtube.com/watch?v=wf-BqAjZb8M">Beyond PEP 8</a></b><span><strong>Raymond Hettinger, PyCon 2015.</strong> The classic talk on readable Python, and on why style rules aren’t the goal.</span></div>
-<div><b>Your English</b><span><strong>A general tip.</strong> Names, docstrings, commit messages, reviews and prompts to agents are all written in English. Clearer English means clearer code, and better answers from models.</span></div>
+<div><b><a href="https://www.youtube.com/@mCoding">mCoding</a></b><span><strong>Python, explained precisely.</strong> How the language really works, and common mistakes.</span></div>
+<div><b><a href="https://www.youtube.com/@ArjanCodes">ArjanCodes</a></b><span><strong>Software design in Python.</strong> SOLID, patterns and refactoring on realistic code.</span></div>
+<div><b><a href="https://www.youtube.com/@CodeAesthetic">CodeAesthetic</a></b><span><strong>Clean code, beautifully animated.</strong> Naming, nesting, abstraction, comments.</span></div>
+<div><b><a href="https://www.youtube.com/watch?v=wf-BqAjZb8M">Beyond PEP 8</a></b><span><strong>Raymond Hettinger, PyCon 2015.</strong> The classic talk on readable Python.</span></div>
+<div><b><a href="https://spinroot.com/gerard/pdf/P10.pdf">NASA’s Power of 10</a></b><span><strong>Rules for safety-critical code.</strong> Simple control flow, bounded loops, checked returns.</span></div>
+<div><b>Your English</b><span><strong>A general tip.</strong> Names, docs, reviews and prompts to agents are all English. Clearer English means clearer code, and better answers from models.</span></div>
 </div>
 
 <!--
