@@ -15,3 +15,6 @@ previous builds/
 
 # Outdated PDF of the old deck's notes; SPEAKER-NOTES.md is current
 SPEAKER-NOTES.pdf
+
+.vercel
+.env*
