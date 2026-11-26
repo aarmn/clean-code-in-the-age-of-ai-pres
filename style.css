@@ -196,8 +196,10 @@
     var(--bg);
 }
 .chapter-head { display: flex; align-items: baseline; gap: 24px; }
+/* Gradient text only paints inside the element's box: pad the box so no glyph edge is clipped. */
 .chapter-num {
-  font: 700 110px/0.9 var(--serif); letter-spacing: -.05em;
+  font: 700 110px/1.08 var(--serif); letter-spacing: -.03em;
+  padding: 0 .1em 0 .02em; margin: -.06em -.06em -.06em 0;
   background: linear-gradient(160deg, var(--accent) 10%, var(--accent-2) 90%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
@@ -329,19 +331,23 @@
 .one-note h1 { font-size: 48px; line-height: 1.12; max-width: 840px; margin: 0; }
 .one-note .lead { margin: 22px auto 0; max-width: 700px; }
 
-/* The word that won't sit still: colour and font both morph. */
-.fuzzy {
-  display: inline-block; font-style: italic; padding: 0 .06em;
-  background: linear-gradient(90deg, #c4a7ff, #f0abfc, #7ee0f5, #c4a7ff);
-  background-size: 300% 100%;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: fuzzy 5s ease-in-out infinite;
+/* Pills (used sparingly, e.g. under advice points). */
+.pill {
+  display: inline-block; margin-top: 10px; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: rgba(var(--accent-rgb), 0.12);
+  color: var(--accent); font: 11px var(--mono); letter-spacing: .12em;
 }
-@keyframes fuzzy {
-  0%, 100% { font-variation-settings: "wght" 320, "SOFT" 0, "WONK" 0, "opsz" 144; background-position: 0% 50%; filter: blur(0); letter-spacing: 0; }
-  35% { font-variation-settings: "wght" 880, "SOFT" 100, "WONK" 1, "opsz" 9; background-position: 60% 50%; filter: blur(.7px); letter-spacing: .04em; }
-  70% { font-variation-settings: "wght" 520, "SOFT" 40, "WONK" 1, "opsz" 72; background-position: 100% 50%; filter: blur(.2px); letter-spacing: -.01em; }
-}
+
+/* Gall's law ladder: one row of steps, simplest on the left. */
+.ladder { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 6px 0 4px; }
+.ladder > div { position: relative; padding: 14px 14px 12px; border: 1px solid var(--line-strong); border-radius: 12px; background: rgba(var(--accent-rgb), 0.07); }
+.ladder > div:not(:last-child)::after { content: "→"; position: absolute; right: -12px; top: 50%; transform: translate(50%, -50%); color: var(--accent); font: 16px var(--mono); }
+.ladder b { display: block; margin-bottom: 8px; font: 10.5px var(--mono); letter-spacing: .14em; color: var(--accent); }
+.ladder code { display: inline-block; margin-bottom: 8px; font-size: 12px !important; white-space: normal; overflow-wrap: anywhere; }
+.ladder p { margin: 0; font-size: 14.5px; line-height: 1.4; }
+
+/* Very long single code block (Money). */
+.code-notes.tiny .slidev-code { font-size: 12px !important; line-height: 1.42 !important; }
 
 /* ── Quotes ─────────────────────────────────────────────────────────── */
 .slidev-layout blockquote {
