@@ -87,46 +87,47 @@ _Generated from the speaker notes in `slides.md`._
 | 79 | 52–52.5 | 01 · Classic · Features to learn | Decorators: wrap a function without touching it |
 | 80 | 52.5–53 | 01 · Classic · Features to learn | Typing: the vocabulary of type hints |
 | 81 | 53–53.5 | 01 · Classic · Features to learn | When Python needs C, C++ or Rust |
-| 82 | 53.5–54 | 01 · Classic · Features to learn | Learn your language’s standard library |
-| 83 | 54–54.5 | 01 · Classic · Tooling | Tooling |
-| 84 | 54.5–55 | 01 · Classic · Tooling | Three checks, three different jobs |
-| 85 | 55–55.5 | 01 · Classic · Tooling | Ruff: one tool instead of six |
-| 86 | 55.5–56 | 01 · Classic · Tooling | Rebuild the same environment with one command |
-| 87 | 56–56.5 | 01 · Classic · Tooling | Pick one type checker and make it a gate |
-| 88 | 56.5–57 | 01 · Classic · Tooling | Let machines nitpick, so humans can review the design |
-| 89 | 57–57.5 | 01 · Classic · Beyond the code | Contracts and observability |
-| 90 | 57.5–58.5 | 01 · Classic · Beyond the code | A contract clients can depend on |
-| 91 | 58.5–59 | 01 · Classic · Beyond the code | Let production tell you what broke |
-| 92 | 59–59.5 | 01 · Classic · Beyond the code | Make the system explain itself |
-| 93 | 59.5–60 | 01 · Classic · Beyond the code | Where our booking API ended up |
-| 94 | 60–60.5 | 02 · Age of AI | Clean Code: Age of AI |
-| 95 | 60.5–61 | 02 · Age of AI · Instructions | Instructions |
-| 96 | 61–63.5 | 02 · Age of AI · Instructions | Ask for an outcome that can be checked |
-| 97 | 63.5–65 | 02 · Age of AI · Instructions | Write the project guide once: AGENTS.md |
-| 98 | 65–66.5 | 02 · Age of AI · Instructions | A skill saves a recipe you repeat |
-| 99 | 66.5–68 | 02 · Age of AI · Instructions | MCP: one plug for tools and context |
-| 100 | 68–68.5 | 02 · Age of AI · Instructions | Onboard your agent like a new teammate |
-| 101 | 68.5–69 | 02 · Age of AI · Tools & permissions | Tools and permissions |
-| 102 | 69–71 | 02 · Age of AI · Tools & permissions | A tool needs a narrow shape and a gate |
-| 103 | 71–72.5 | 02 · Age of AI · Tools & permissions | Decide permissions before the run |
-| 104 | 72.5–73 | 02 · Age of AI · Tools & permissions | Enforce limits in the harness, not in the prompt |
-| 105 | 73–73.5 | 02 · Age of AI · Choosing a model | Choosing a model |
-| 106 | 73.5–75 | 02 · Age of AI · Choosing a model | How to find a good model for your case |
-| 107 | 75–76 | 02 · Age of AI · Choosing a model | Where to look for candidates |
-| 108 | 76–77.5 | 02 · Age of AI · Choosing a model | Twenty booking tasks, three candidates |
-| 109 | 77.5–78 | 02 · Age of AI · Choosing a model | Your test suite is your benchmark |
-| 110 | 78–78.5 | 02 · Age of AI · Review | Review |
-| 111 | 78.5–82.5 | 02 · Age of AI · Review | Demo · An agent adds cancellation |
-| 112 | 82.5–84.5 | 02 · Age of AI · Review | Review the evidence, then merge |
-| 113 | 84.5–86.5 | 02 · Age of AI · Review | Your first hour back at the keyboard |
-| 114 | 86.5–87.5 | 02 · Age of AI · Review | Make it readable. Make it checkable. |
-| 115 | 87.5–88 | Resources | Watch |
-| 116 | 88–88.5 | Resources | Read, then practice |
-| 117 | 88.5–89.5 | Resources | Seven books worth your next year |
-| 118 | 89.5–90 | Resources | Thanks for listening! |
+| 82 | 53.5–54 | 01 · Classic · Features to learn | Faster, without leaving Python |
+| 83 | 54–54.5 | 01 · Classic · Features to learn | Learn your language’s standard library |
+| 84 | 54.5–55 | 01 · Classic · Tooling | Tooling |
+| 85 | 55–55.5 | 01 · Classic · Tooling | Three checks, three different jobs |
+| 86 | 55.5–56 | 01 · Classic · Tooling | Ruff: one tool instead of six |
+| 87 | 56–56.5 | 01 · Classic · Tooling | Rebuild the same environment with one command |
+| 88 | 56.5–57 | 01 · Classic · Tooling | Pick one type checker and make it a gate |
+| 89 | 57–57.5 | 01 · Classic · Tooling | Let machines nitpick, so humans can review the design |
+| 90 | 57.5–58 | 01 · Classic · Beyond the code | Contracts and observability |
+| 91 | 58–58.5 | 01 · Classic · Beyond the code | A contract clients can depend on |
+| 92 | 58.5–59 | 01 · Classic · Beyond the code | Let production tell you what broke |
+| 93 | 59–59.5 | 01 · Classic · Beyond the code | Make the system explain itself |
+| 94 | 59.5–60 | 01 · Classic · Beyond the code | Where our booking API ended up |
+| 95 | 60–60.5 | 02 · Age of AI | Clean Code: Age of AI |
+| 96 | 60.5–61 | 02 · Age of AI · Instructions | Instructions |
+| 97 | 61–63.5 | 02 · Age of AI · Instructions | Ask for an outcome that can be checked |
+| 98 | 63.5–65 | 02 · Age of AI · Instructions | Write the project guide once: AGENTS.md |
+| 99 | 65–66.5 | 02 · Age of AI · Instructions | A skill saves a recipe you repeat |
+| 100 | 66.5–68 | 02 · Age of AI · Instructions | MCP: one plug for tools and context |
+| 101 | 68–68.5 | 02 · Age of AI · Instructions | Onboard your agent like a new teammate |
+| 102 | 68.5–69 | 02 · Age of AI · Tools & permissions | Tools and permissions |
+| 103 | 69–71 | 02 · Age of AI · Tools & permissions | A tool needs a narrow shape and a gate |
+| 104 | 71–72.5 | 02 · Age of AI · Tools & permissions | Decide permissions before the run |
+| 105 | 72.5–73 | 02 · Age of AI · Tools & permissions | Enforce limits in the harness, not in the prompt |
+| 106 | 73–73.5 | 02 · Age of AI · Choosing a model | Choosing a model |
+| 107 | 73.5–75 | 02 · Age of AI · Choosing a model | How to find a good model for your case |
+| 108 | 75–76 | 02 · Age of AI · Choosing a model | Where to look for candidates |
+| 109 | 76–77.5 | 02 · Age of AI · Choosing a model | Twenty booking tasks, three candidates |
+| 110 | 77.5–78 | 02 · Age of AI · Choosing a model | Your test suite is your benchmark |
+| 111 | 78–78.5 | 02 · Age of AI · Review | Review |
+| 112 | 78.5–82.5 | 02 · Age of AI · Review | Demo · An agent adds cancellation |
+| 113 | 82.5–84.5 | 02 · Age of AI · Review | Review the evidence, then merge |
+| 114 | 84.5–86.5 | 02 · Age of AI · Review | Your first hour back at the keyboard |
+| 115 | 86.5–87.5 | 02 · Age of AI · Review | Make it readable. Make it checkable. |
+| 116 | 87.5–88 | Resources | Watch |
+| 117 | 88–88.5 | Resources | Read, then practice |
+| 118 | 88.5–89.5 | Resources | Seven books worth your next year |
+| 119 | 89.5–90 | Resources | Thanks for listening! |
 
 ## Demo cues
 
-1. Slides 9, 10, 65, 66, 96, 102 are click-throughs: each click changes the code and swaps the list beside it.
+1. Slides 9, 10, 65, 66, 97, 103 are click-throughs: each click changes the code and swaps the list beside it.
 2. Before the talk, open a terminal in `workshop/` and run `uv sync --locked` once.
 3. On the demo slide, give the task from `workshop/README.md` to an agent, or apply `cancellation-reference.patch` if there is no time or network. Then run `uv run --locked pytest -q` and open `/docs` to show the DELETE responses.

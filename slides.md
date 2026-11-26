@@ -2846,6 +2846,7 @@ chapter: Features to learn
 <li>f-strings, functools.lru_cache, copy and deepcopy</li>
 <li>pickle, decorators and type hints</li>
 <li>Going native: the C API and ABI, pybind11, PyO3 and maturin</li>
+<li>Faster runtimes: PyPy, GraalPy, Numba and Taichi</li>
 </ul>
 
 <!--
@@ -3319,6 +3320,29 @@ Ruff and uv are Rust programs packaged with maturin too: that is how a Rust tool
 -->
 
 ---
+
+<div class="kicker">PYTHON FEATURE · FASTER RUNTIMES</div>
+
+# Faster, without leaving Python
+
+<div class="rows wide">
+<div><b>PyPy</b><span><strong>Another interpreter, with a JIT.</strong> Pure-Python loops often run several times faster.</span></div>
+<div><b>GraalPy</b><span><strong>Python on GraalVM.</strong> A JIT too, plus direct calls into Java libraries.</span></div>
+<div><b>Numba</b><span><code>@njit</code> compiles a numeric function to machine code on its first call.</span></div>
+<div><b>Taichi</b><span><code>@ti.kernel</code> turns Python loops into parallel kernels for the GPU or CPU.</span></div>
+<div><b>JAX · CuPy</b><span><strong>NumPy-style arrays on the GPU.</strong> <code>jax.jit</code> compiles whole array functions.</span></div>
+<div><b>mypyc</b><span><strong>Type-hinted Python compiled to C.</strong> mypy and black ship this way.</span></div>
+</div>
+
+<div class="statement">Smallest change first: a decorator, then a runtime, then a rewrite.</div>
+
+<!--
+0.5 min · 53.5–54 elapsed
+
+PyPy and GraalPy replace the whole interpreter, so test your dependencies there first: packages with C extensions are the usual catch. Numba, Taichi, JAX and mypyc speed up only the code you point them at. CPython itself is getting faster too: 3.13 added an experimental JIT and a free-threaded (no-GIL) build, which 3.14 supports officially. Codon and Mojo look like Python but are separate languages that compile ahead of time.
+-->
+
+---
 class: advice
 ---
 
@@ -3333,7 +3357,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 53.5–54 elapsed
+0.5 min · 54–54.5 elapsed
 -->
 
 ---
@@ -3358,7 +3382,7 @@ chapter: Tooling
 </ul>
 
 <!--
-0.5 min · 54–54.5 elapsed
+0.5 min · 54.5–55 elapsed
 -->
 
 ---
@@ -3376,7 +3400,7 @@ chapter: Tooling
 <div class="statement">And tests check behavior: the fourth job no tool can guess.</div>
 
 <!--
-0.5 min · 54.5–55 elapsed
+0.5 min · 55–55.5 elapsed
 -->
 
 ---
@@ -3397,7 +3421,7 @@ chapter: Tooling
 <div class="statement">Written in Rust, 10 to 100 times faster: quick enough to run on every save.</div>
 
 <!--
-0.5 min · 55–55.5 elapsed
+0.5 min · 55.5–56 elapsed
 
 Configure it once in pyproject.toml: `[tool.ruff.lint] select = ["E", "F", "I", "UP", "B", "D", "S", "A"]`. Start with a small set and add rule families when they would have caught a real bug.
 -->
@@ -3426,7 +3450,7 @@ uv run pytest -q
 </ul>
 
 <!--
-0.5 min · 55.5–56 elapsed
+0.5 min · 56–56.5 elapsed
 -->
 
 ---
@@ -3443,7 +3467,7 @@ uv run pytest -q
 <div class="statement">Several checkers in the editor is fine. One of them blocks the merge.</div>
 
 <!--
-0.5 min · 56–56.5 elapsed
+0.5 min · 56.5–57 elapsed
 
 pyright is Microsoft’s open-source checker; Pylance wraps it for VS Code with extra, closed-source features; basedpyright is a community fork that brings several of those features to any editor. ty is Astral’s (the Ruff and uv team), pyrefly is Meta’s.
 -->
@@ -3463,7 +3487,7 @@ class: advice
 </div>
 
 <!--
-0.5 min · 56.5–57 elapsed
+0.5 min · 57–57.5 elapsed
 -->
 
 ---
@@ -3487,7 +3511,7 @@ chapter: Beyond the code
 </ul>
 
 <!--
-0.5 min · 57–57.5 elapsed
+0.5 min · 57.5–58 elapsed
 -->
 
 ---
@@ -3533,7 +3557,7 @@ POST /bookings
 </div>
 
 <!--
-1 min · 57.5–58.5 elapsed
+0.5 min · 58–58.5 elapsed
 -->
 
 ---
